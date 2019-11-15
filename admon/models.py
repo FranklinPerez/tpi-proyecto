@@ -49,8 +49,7 @@ class Grado(models.Model):
 class Materia(models.Model):
 	codMat=models.CharField(max_length=15,help_text="codigo de la materia", primary_key=True)
 	nomMat=models.CharField(max_length=15,help_text="nombre de la materia")
-	graMat=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)
-	proMat=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=False)
+	graMat=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)	
 #fin modelo para los materias que cursan los estudiantes
 
 # modelo para los profesores
@@ -58,3 +57,12 @@ class Profesor(models.Model):
 	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
 	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
 #fin modelo para los profesores
+
+# modelo para registro de nota
+class Registro(models.Model):
+	numReg=models.IntegerField(help_text="numero de registro", primary_key=True)
+	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")
+	notMat=models.ForeignKey('Materia', on_delete=models.SET_NULL, null=True)
+	notEst=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
+	notPro=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)	
+#fin modelo para registro de nota

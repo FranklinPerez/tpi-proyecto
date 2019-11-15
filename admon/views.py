@@ -22,7 +22,7 @@ def autenticarUsuario(request):
     filtro = Usuario.objects.filter(codUsu=username).filter(pasUsu=password).values('tipo_usuario')
     if filtro:
     	if filtro[0].get('tipo_usuario')=='m':
-    		return redirect('admon:listado_consulta')            
+    		return redirect('admon:bienvenida')            
     	else:
     		if filtro[0].get('tipo_usuario')=='s': 
     			return redirect('admon:gestion_cita')
@@ -30,3 +30,11 @@ def autenticarUsuario(request):
     	return render(request,'plantillas/errorUsuario.html')	
 def cerrarSesion(request):
     return render(request,'plantillas/login.html')
+
+
+def bienvenida(request):   
+
+    return render(
+        request,
+        'base/base.html'
+    )
