@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('codUsu', models.CharField(help_text='Ingrese el Usuario, maximo 10 caracteres', max_length=10, primary_key=True, serialize=False)),
                 ('pasUsu', models.CharField(help_text='Ingrese contraseña, maximo 20 caracteres', max_length=20)),
-                ('tipo_usuario', models.CharField(blank=True, choices=[('s', 'Secretaria'), ('m', 'Medico')], default='sssssqqqqq', help_text='Tipo de usuario en el sistema', max_length=10)),
+                ('tipo_usuario', models.CharField(blank=True, choices=[('e', 'Estudiante'), ('d', 'Docente')], default='sssssqqqqq', help_text='Tipo de usuario en el sistema', max_length=10)),
             ],
         ),
     ]

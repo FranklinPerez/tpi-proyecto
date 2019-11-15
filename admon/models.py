@@ -9,8 +9,13 @@ class Usuario(models.Model):
 	pasUsu=models.CharField(max_length=20,help_text="Ingrese contraseña, maximo 20 caracteres")
 
 	TIPO_USUARIO= (
+
 		('s','Profesor'),
 		('m', 'Medico'),		
+
+		('e','Estudiante'),
+		('d', 'Docente'),		
+
 		)
 
 	tipo_usuario= models.CharField(
