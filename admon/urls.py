@@ -6,7 +6,7 @@ app_name = 'admon'
 urlpatterns=[
 	path('index/', index, name='index'),
 
-	path('iniciarSesion', iniciarSesion, name='inicar_sesion'),
+	path('iniciarSesion', iniciarSesion, name='inicarsesion'),
 	path('autenticarUsuario', autenticarUsuario, name='autenticar_usuario'),
 	path('cerrarSesion', cerrarSesion, name='cerrar_sesion'),
 	path('bienvenida', bienvenida, name='bienvenida'),

@@ -99,29 +99,13 @@ class Profesor(models.Model):
 #fin modelo para los profesores
 
 # modelo para registro de nota
-class Registro(models.Model):
+class Actividad(models.Model):
 	numReg=models.IntegerField(help_text="numero de registro", primary_key=True)
-	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")
-	ponNot=models.DecimalField(max_digits = 3, decimal_places = 2,help_text="ponderacion del estudiante")
+	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")	
 	notMat=models.ForeignKey('Materia', on_delete=models.SET_NULL, null=True)
 	notEst=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
 	notPro=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
-
-	PERIODO= (
-
-		('1', '1er periodo'),
-		('2', '2do periodo'),
-		('3', '3er periodo'),
-		('4', '4to periodo'),			
-
-		)
-
-	periodo= models.CharField(
-        max_length=15,
-        choices=PERIODO,
-        blank=True,
-        default='1',
-        help_text='Tipo de nota del estudiante')
+	mes=models.ForeignKey('Mes', on_delete=models.SET_NULL, null=True)
 
 	TIPO_NOTA= (
 
@@ -155,3 +139,8 @@ class Municipio(models.Model):
 	def __str__(self):
 		return self.nomMunicipio	
 #fin modelo para municipio
+
+class Mes(models.Model):
+	nomMes=models.CharField(max_length=15,primary_key=True)
+	anio=models.CharField(max_length=4, help_text="año del Mes")
+
