@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
+from .validators import solo_Letras, solo_Numeros, fecha_Mayor_Que_Hoy
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 #modelo para los usuarios del sistema
@@ -96,6 +98,9 @@ class Profesor(models.Model):
         blank=True,
         default='a',
         help_text='Tipo de usuario en el sistema')
+
+	def __str__(self):
+		return self.nomPro
 #fin modelo para los profesores
 
 # modelo para registro de nota
@@ -155,3 +160,213 @@ class Municipio(models.Model):
 	def __str__(self):
 		return self.nomMunicipio	
 #fin modelo para municipio
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Modelo para la Evaluacion de Profesores
+class EvaluacionDocente(models.Model):
+	numEva = models.AutoField(primary_key=True)
+	fecVen = models.DateField(null=False, blank=False, validators = [fecha_Mayor_Que_Hoy])
+	profes = models.ForeignKey('Profesor', on_delete = models.PROTECT, null=False)
+
+	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
+
+	valPreg0 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg1 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg2 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg3 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg4 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg5 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg6 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg7 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg8 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
+
+	totalE = models.IntegerField( null=True, blank = True)
+
+	ESTADO= ((1,'Pendiente'),(2, 'Finalizada'),)
+	estado= models.IntegerField( choices=ESTADO, blank=True, default=1)
+
+# Fin Modelo EvaluacionDocente

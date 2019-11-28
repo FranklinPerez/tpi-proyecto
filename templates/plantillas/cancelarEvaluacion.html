@@ -1,0 +1,27 @@
+<div class="modal-dialog modal-lg-4">
+	<div class="modal-content">
+
+		<form action=" {% url 'admon:cancelarEv' object.pk %}" method="post">
+
+             <div class="modal-body">
+				{% csrf_token %}
+				<div class="mdl-dialog__content" align="center">
+					<h4> ¿Realmente desea cancelar esta Evaluación? </h4>
+					<br>
+					<h7> Si se cancela, ésta será eliminada </h7>
+					<br><br>
+					<h5>Docente: {{object.profes}}</h5>
+					<h5>Para la Fecha: {{object.fecVen}} </h5>
+				</div>
+			</div>
+					<div class="modal-footer">
+			                                <div class="col-lg-8 text-right"> 
+
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="background-color:#f6685e;color:white" type="submit">Si, Cancelarla</button>
+
+					 <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#33CC00;color:white" onclick="return cerrar_modal()">No, Regresar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
