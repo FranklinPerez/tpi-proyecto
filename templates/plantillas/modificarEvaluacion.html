@@ -1,0 +1,51 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Modificacion de Evaluaciones Docentes {% endblock %}
+
+{% block encabezado %} Modificacion de Evaluaciones Docentes {% endblock %}
+{% block content %}
+
+
+<h3> Modificar la Evaluación</h3>
+<br>
+<h6><b>Nota: </b></h6>
+<h6>Solo puede cambiar la fecha límite pera la evaluación</h6>
+<br>
+
+    <form role="form" method="POST" >
+            
+    {% csrf_token %}
+         
+    <h4>Evaluacion del Docente: {{object.profes}}</h4>
+    {{form.as_p}}
+    <br><br>
+
+    <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar Cambios">
+
+    <a href="{% url 'admon:gestionEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+                 
+                 
+        </form>
+    </div> 
+
+<script type="text/javascript">
+
+//<!--Para el  datepicker-->
+    $(function(){
+        $(".datepicker").datepicker({
+            monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Dicimbre" ],
+            monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ], 
+            dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ], 
+            dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "jue", "Vie", "Sab" ], 
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "jue", "Vie", "Sab"],
+            dateFormat: "yy-mm-dd",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "2019:3000",
+        });
+    });
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base/base.html'%}
+
+{% block title %}Armar Evaluación de Docentes {% endblock %}
+
+{% block encabezado %}Armar Evaluación de Docentes {% endblock %}
+{% block content %}
+<h3> Iniciar la Evaluación de Cada Docente</h3>
+<h5>Seleccione la fecha límite y al Docente a Evaluar</h5>
+<br>
+<h6><b>Nota: </b></h6>
+<h6>Si luego de seleccionar la fecha no hay Docentes en la lsta, significa que todos los Docentes ya tienen evaluaciones activas</h6>
+<br>
+
+      
+    <div>
+        <form role="form" method="POST" >
+            
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td width="600">
+                        {{form.as_p}}
+                        <br><br><br>
+
+                        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Aceptar">
+
+                        <a href="{% url 'admon:gestionEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+                 
+                 
+               </tr>
+            </table>             
+        </form>
+    </div> 
+
+<script type="text/javascript">
+
+    function vaciarCombo(){
+        $("#id_profes").html('<option value="" selected = "selected">Primero Seleccione una fecha</option>');      
+        $("#id_profes").trigger("change");    
+    }
+
+    window.onload= vaciarCombo;
+
+//AJAX ==========================================
+    $(document).ready(function(){
+        $("#id_fecVen").on("change", getDocentes);    
+    });
+
+    function getDocentes(){
+        var pro = $("#id_fecVen").val();
+        if (pro != ""){
+            $("#id_profes").html("");
+            var request = $.ajax({
+                type: "GET",
+                url: "{% url 'admon:load_Docentes' %}",
+                data: {'pro':pro},
+            });
+            request.done(function(response){
+                $("#id_profes").html(response);
+               
+            });
+    
+        }else{
+            $("#id_profes").html('<option value="" selected = "selected">-----------</option>');      
+            $("#id_profes").trigger("change");
+        }
+    }
+//===========================================================================
+
+
+//<!--Para el  datepicker-->
+    $(function(){
+        $(".datepicker").datepicker({
+            monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Dicimbre" ],
+            monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ], 
+            dayNames: [ "Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" ], 
+            dayNamesShort: [ "Dom", "Lun", "Mar", "Mie", "jue", "Vie", "Sab" ], 
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "jue", "Vie", "Sab"],
+            dateFormat: "yy-mm-dd",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "2019:3000",
+        });
+    });
+
+
+</script>
+
+{% endblock %}
