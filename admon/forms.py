@@ -18,3 +18,15 @@ class EstudianteForm(forms.ModelForm):
 		    'edadEst':'edad actual',
 		    'dirEst':'Direccion',
 		}	
+		
+class ProfesorForm(forms.ModelForm):
+	class Meta:
+		model = Profesor
+		fields = {
+			'codPro','nomPro', 'estado',
+		}
+		labels = {
+			'codPro':'Codigo del profesor',
+			'nomPro':'Nombre del profesor',
+		    'estado':'estado',
+		}

@@ -1,0 +1,75 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de Profesor {% endblock %}
+
+{% block encabezado %} Gestion de Profesor {% endblock %}
+{% block content %}
+<h3>Aqui puede registrar, modificar y eliminar los profesores</h3>
+<div class="container">
+	<div class="row">
+
+	<a onclick="return abrir_modal('{% url 'admon:crear_Profesor' %}', 'Crear profesor')" class="btn btn-success" style="color:white; background-color:#33CC00">
+   Registrar Nuevo Profesor
+		</a>---
+		<a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado de profesores</a>
+<div id="popup">
+	</div>
+</div><br><br>
+
+<br><br>
+<div class="row text-center">
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Codigo del Profesor</th>
+			<th style="text-align: center">Nombre del Profesor</th>
+			<th style="text-align: center">Estado</th>
+		</tr>
+		{% for pro in profesores %}
+					<tr>
+						<td>{{pro.codPro}}</td>
+						<td>{{pro.nomPro}}</td>
+						<td style="text-align:center;">
+							<a href="#" onclick="return abrir_modal('{% url 'citasyconsultas:modificar_esticamento' est.pk %}', 'Modificar/{{ est.codesticamento }}')" class="btn"><span class="glyphicon glyphicon-pencil">Editar {{est.nomesticamento}}</a>
+							</td>
+						<td style="text-align:center;">
+							<a href="#" onclick="return abrir_modal('{% url 'citasyconsultas:eliminar_esticamento' est.pk %}', 'Emiminar/{{ est.codesticamento}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar {{est.nomesticamento}}</a
+								td>
+					</tr>
+		{% endfor %}
+	</table>
+</div>
+</div>
+
+
+</div>
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 600,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+
+{% endblock %}

@@ -63,3 +63,12 @@ class crearEstudiante(CreateView):
     success_url = reverse_lazy('admon:listado_estudiante')
 
 
+class ListadoProfesores(ListView):
+    model = Profesor
+    template_name = 'plantillas/gestionProfesor.html'
+    context_object_name = 'profesores'
+
+class crearProfesor(CreateView):
+    template_name = 'plantillas/crearProfesor.html'
+    form_class = ProfesorForm
+    success_url = reverse_lazy('admon:listado_Profesor')

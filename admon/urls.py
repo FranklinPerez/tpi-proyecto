@@ -12,5 +12,7 @@ urlpatterns=[
 	path('bienvenida', bienvenida, name='bienvenida'),
 	path('gestionEstudiante/', ListadoEstudiante.as_view(), name='listado_estudiante'),
 	path('matricula/', crearEstudiante.as_view(), name='crear_estudiante'),
+	path('gestionProfesor/', ListadoProfesores.as_view(), name='listado_Profesor'),
+    path('registrarProfesor/', crearProfesor.as_view(), name='crear_Profesor'),
 	
 	]
