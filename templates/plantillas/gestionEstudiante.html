@@ -8,7 +8,7 @@
 <div class="container">
 	<div class="row">
 
-	<a onclick="return abrir_modal('{% url 'admon:crear_estudiante' %}', 'Crear estudiante')" class="btn btn-success" style="color:white; background-color:#33CC00">
+	<a href="{% url 'admon:crear_estudiante' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
    Registrar Nuevo Estudiante
 		</a>---
 		<a href="{% url 'admon:listado_estudiante' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado de estudiantes</a>

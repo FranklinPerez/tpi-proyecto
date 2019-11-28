@@ -36,7 +36,7 @@ def autenticarUsuario(request):
 
     	else:
     		if filtro[0].get('tipo_usuario')=='d': 
-    			return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
+    		  return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
     else:
     	return render(request,'plantillas/errorUsuario.html')	
 
@@ -61,5 +61,7 @@ class crearEstudiante(CreateView):
     template_name = 'plantillas/crearEstudiante.html'
     form_class = EstudianteForm
     success_url = reverse_lazy('admon:listado_estudiante')
+
+
 
 
