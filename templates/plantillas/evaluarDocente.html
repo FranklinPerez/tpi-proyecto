@@ -1,0 +1,88 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Evaluación de Docentes {% endblock %}
+
+{% block encabezado %} Evaluación de Docentes {% endblock %}
+{% block content %}
+<h3> Realice la Evaluación del respectivo Docente</h3>
+<h5> Por Favor Evalúe de manera sincera y objetiva</h5>
+
+    <div>
+        <h3>Docente: {{ e.profes }}</h3>
+        <h3>Fecha Limite: {{ e.fecVen }}</h3>
+    </div>
+      
+    <div>
+        <form role="form" method="post">
+            
+            {% csrf_token %}
+        
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <tr>
+                            <td><b> 1-> </b></td>
+                            <td>Inicia y termina la clases a la hora establecida.</td>
+                            <td>{{ form.valPreg0 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 2-> </b></td>
+                            <td>Responde adecuadamente a las preguntas que se le hacen respecto al tema en estudio.</td>
+                            <td>{{ form.valPreg1 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 3-> </b></td>
+                            <td>Hace uso de los recursos disponibles en el aula para mejorar el proceso de enseñanza.</td>
+                            <td>{{ form.valPreg2 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 4-> </b></td>
+                            <td>Repite la explicaión sobre algun aspecto del tema en estudio de forma adecuada cuando se le solicita.</td>
+                            <td>{{ form.valPreg3 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 5-> </b></td>
+                            <td>Trata de forma respetuosa a todos los estudiantes</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 6-> </b></td>
+                            <td>Entrega las calificaciones de exámenes, tareas y demás actividades en la fecha acordada.</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 7-> </b></td>
+                            <td>Motiva a los estudiantes a seguir aprendiendo y asistiendo a clases.</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 8-> </b></td>
+                            <td>Resuelve dudas sobre los temas de estudio, aún fuera de las horas de clase.</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 9-> </b></td>
+                            <td>Califica las tareas, exámenes, exposiciones y demás actividades  académicas de forma imparcial y objetiva.</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b> 10-> </b></td>
+                            <td>Es notorio su interés por que los estudiantes realmente aprendan en sus clases.</td>
+                            <td>{{ form.valPreg4 }}</td>
+                        </tr>
+
+                    </tr>
+                    
+                </tbody>                            
+            </table>
+                                 
+                                            
+            
+            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
+
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#f6685e;color:white">Cancelar</button>
+                             
+        </form>
+    </div> 
+
+{% endblock %}

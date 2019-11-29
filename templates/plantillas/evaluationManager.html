@@ -1,0 +1,81 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de Evaluaciones Docentes {% endblock %}
+
+{% block encabezado %} Gestion de Evaluaciones Docentes {% endblock %}
+{% block content %}
+
+
+<h3>Control de Evaluaciones</h3><br>
+<div>
+	<a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Generar Evaluación</a>
+	
+	<!--<div><a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a></div><br>-->
+
+<br><br>
+
+<br><br>
+
+<div class="row text-center">
+
+<table  class="table table- stripped">
+		<tr style="text-align: center">
+			<th style="text-align: center">Docente </th>
+			<th style="text-align: center">Estado (1 -> pendiente)</th>
+			<th style="text-align: center">Fecha Límite </th>
+			
+		</tr>
+		{% for e1 in evP %}
+			<tr >
+				<td>{{e1.profes}}</td>
+				<td>{{e1.estado}}</td>
+				<td>{{e1.fecVen}}</td>
+				
+				<td style="text-align:center;">
+					<a href="{% url 'admon:modificarEv' e1.pk %}" class="btn"><span class="glyphicon glyphicon-pencil">Modificar</a>
+				</td>
+
+				<td style="text-align:center;">
+					<a href="#" onclick="return abrir_modal('{% url 'admon:cancelarEv' e1.pk %}', 'Cancelar Evaluación del Docente {{ e1.profes}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Cancelar</a>
+				</td>
+			</tr>
+		{% endfor %}
+</table>
+
+</div>
+<div id="popup">
+
+</div>
+<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 600,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+
+
+</script>
+
+
+{% endblock %}

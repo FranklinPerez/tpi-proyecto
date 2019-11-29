@@ -1,0 +1,23 @@
+{% extends 'base/base.html'%}
+
+{% block title %}Armada {% endblock %}
+
+{% block encabezado %}Armada {% endblock %}
+{% block content %}
+
+<br>
+
+<br>
+
+            <h3> Evaluación Creada Con Exito </h3>
+                       
+            <h4>¿Desea Crear otra Evaluación para otro Docente?</h4>
+           
+           <br><br>
+           
+            <a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#33CC00"> SI </a>
+
+            <a href="{% url 'admon:gestionEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e"> No </a><br>
+
+                    
+{% endblock %}
