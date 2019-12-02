@@ -7,6 +7,7 @@ from .forms import *
 from datetime import *
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
 # Create your views here.
 def index(request):   
 
@@ -33,7 +34,7 @@ def autenticarUsuario(request):
     		return redirect('admon:bienvenida')            
 
     	if filtro[0].get('tipo_usuario')=='e':
-    		return redirect('admon:listado_consulta')   #sustituir listado_consulta por el del estudiante        
+    		return redirect('admon:perfilE', username)   #sustituir listado_consulta por el del estudiante        
 
     	else:
     		if filtro[0].get('tipo_usuario')=='d': 
@@ -244,8 +245,41 @@ class ModificarEvaluacion(UpdateView):
     model = EvaluacionDocente
     success_url = reverse_lazy('admon:gestionEvaluacion')
 
+def EvaluacionesPendientes(request):
+    pk = request.GET.get('action', None)
+
+    e = EvaluacionDocente.objects.filter(estado = 1).filter(profes__registro__notEst_id = pk).distinct()
+    est = Estudiante.objects.get(nieEst = pk)
+    return render(request, 'plantillas/evPendientes.html', {'e':e,'est':est})
+
 # Vista del estudiante para evaluar al docente-------------------------------------
 def evaluarDocente(request):
-    e = EvaluacionDocente.objects.get(estado = 1)
-    form = EvaluacionForm(request.POST)
-    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
+    pk = request.GET.get('docente', None)
+    epk = request.GET.get('estudiante', None)
+
+    e = EvaluacionDocente.objects.filter(estado = 1).filter(profes_id = pk)[0]
+    est = Estudiante.objects.get(nieEst = epk)
+    form = EvaluacionForm(request.GET, instance = e)
+    copy = form.save()
+    copy.pk = None
+    copy.estado = 2
+    copy.save()
+    
+    return render(request, 'plantillas/evaluarDocente.html', {'form':form,'est':est,'e':e} )
+
+def verNotas(request):
+    pk = request.GET.get('action', None)
+
+    e = Estudiante.objects.get(nieEst = pk)
+    r = Registro.objects.filter(notEst = pk).filter(year = datetime.now().year).order_by('notMat', 'periodo')
+    m = Materia.objects.filter(registro__notEst = pk).filter(registro__year = datetime.now().year).distinct().order_by('codMat')
+
+    return render(request, 'plantillas/verNotas.html',  {'e':e, 'r':r,'m':m})
+
+def PerfilEstudiante(request, username):
+    e = Estudiante.objects.get(usuario__codUsu = username)
+    model = Estudiante
+    form = PerfilEstudianteForm(request.POST, instance = e)
+
+    return render(request, 'plantillas/perfilEstudiante.html', {'form':form, 'e':e})
+

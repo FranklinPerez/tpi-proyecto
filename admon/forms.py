@@ -229,7 +229,7 @@ class EvaluacionForm(forms.ModelForm):
 			'valPreg7',
 			'valPreg8',
 			'valPreg9',
-
+			'totalE',
 		}
 		labels = {
 			'valPreg0':'',
@@ -242,4 +242,20 @@ class EvaluacionForm(forms.ModelForm):
 		    'valPreg7':'',
 		    'valPreg8':'',
 		    'valPreg9':'',
-		}	
+		    'totalE':''
+		}
+		widgets ={
+			'totalE' : forms.TextInput(attrs={'type':'hidden'}),
+		}
+
+
+
+class PerfilEstudianteForm(forms.ModelForm):
+	class Meta:
+		model = Estudiante
+		fields = {'nomEst', 'apeEst', 'graEst'}
+		labels = {
+			'nomEst':'',
+			'apeEst':'',
+			'graEst':'',
+		}

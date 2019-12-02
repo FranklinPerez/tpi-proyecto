@@ -8,16 +8,16 @@
 <h5> Por Favor Evalúe de manera sincera y objetiva</h5>
 
     <div>
-        <h3>Docente: {{ e.profes }}</h3>
-        <h3>Fecha Limite: {{ e.fecVen }}</h3>
+        <h3>Docente: {{e.profes }}</h3>
+        <h5>Fecha Limite: {{ e.fecVen }}</h5>
     </div>
-      
+    <br>
     <div>
-        <form role="form" method="post">
+        <form role="form" method="get" action="{% url 'admon:perfilE' est.usuario.codUsu%}">
             
             {% csrf_token %}
         
-            <table border="1">
+            <table border="2">
                 <tbody>
                     <tr>
                         <tr>
@@ -48,27 +48,27 @@
                         <tr>
                             <td><b> 6-> </b></td>
                             <td>Entrega las calificaciones de exámenes, tareas y demás actividades en la fecha acordada.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg5 }}</td>
                         </tr>
                         <tr>
                             <td><b> 7-> </b></td>
                             <td>Motiva a los estudiantes a seguir aprendiendo y asistiendo a clases.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg6 }}</td>
                         </tr>
                         <tr>
                             <td><b> 8-> </b></td>
                             <td>Resuelve dudas sobre los temas de estudio, aún fuera de las horas de clase.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg7 }}</td>
                         </tr>
                         <tr>
                             <td><b> 9-> </b></td>
                             <td>Califica las tareas, exámenes, exposiciones y demás actividades  académicas de forma imparcial y objetiva.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg8 }}</td>
                         </tr>
                         <tr>
                             <td><b> 10-> </b></td>
                             <td>Es notorio su interés por que los estudiantes realmente aprendan en sus clases.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg9 }}</td>
                         </tr>
 
                     </tr>
@@ -76,13 +76,72 @@
                 </tbody>                            
             </table>
                                  
-                                            
-            
             <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
-
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#f6685e;color:white">Cancelar</button>
                              
         </form>
     </div> 
 
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        $("#id_valPreg0").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg1").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg2").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg3").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg4").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg5").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg6").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg7").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg8").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg9").on("change", getTotal); 
+    });
+
+    function getTotal(){
+        var c = 0;
+        var array = [$("#id_valPreg0").val(),
+                    $("#id_valPreg1").val(),
+                    $("#id_valPreg2").val(),
+                    $("#id_valPreg3").val(),
+                    $("#id_valPreg4").val(),
+                    $("#id_valPreg5").val(),
+                    $("#id_valPreg6").val(),
+                    $("#id_valPreg7").val(),
+                    $("#id_valPreg8").val(),
+                    $("#id_valPreg9").val()];
+
+        for (var i = array.length - 1; i >= 0; i--) {
+            c += array[i];
+        }
+
+        form.totalE.val() = c;
+    }
+
+</script>
 {% endblock %}

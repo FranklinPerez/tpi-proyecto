@@ -11,17 +11,15 @@
 	<a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Generar Evaluación</a>
 	
 	<!--<div><a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a></div><br>-->
-
-<br><br>
-
-<br><br>
-
+<br><br><br>
+<h5>Se muestran las evaluaciones con estado de Pendiente ( Estado = 1 )</h5><br>
+</div>
 <div class="row text-center">
 
 <table  class="table table- stripped">
 		<tr style="text-align: center">
 			<th style="text-align: center">Docente </th>
-			<th style="text-align: center">Estado (1 -> pendiente)</th>
+			<th style="text-align: center">Estado</th>
 			<th style="text-align: center">Fecha Límite </th>
 			
 		</tr>
@@ -36,7 +34,7 @@
 				</td>
 
 				<td style="text-align:center;">
-					<a href="#" onclick="return abrir_modal('{% url 'admon:cancelarEv' e1.pk %}', 'Cancelar Evaluación del Docente {{ ei.profes}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Cancelar</a>
+					<a href="#" onclick="return abrir_modal('{% url 'admon:cancelarEv' e1.pk %}', 'Cancelar Evaluación del Docente {{ e1.profes}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Cancelar</a>
 				</td>
 			</tr>
 		{% endfor %}

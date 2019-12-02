@@ -1,0 +1,41 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Evaluaciones Pendientes {% endblock %}
+
+{% block encabezado %} Evaluaciones Pendientes {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h3>Evaluaciones Pendientes.</h3>
+    <h4>Se muestran las evaluacicones de sus respectivos Docentes</h4>
+    <br>
+
+<br>
+
+<table  class="table table-sm">
+    <tr style="text-align: center">
+        <th style="text-align: center"> Docente </th>
+        <th style="text-align: center">Fecha Límite </th>
+
+    </tr>
+    {% for e in e %} <!-- Info por materia-->
+    <tr>
+        <td width="200" style="text-align: center">{{e.profes}}</td>
+        <td style="text-align: center">{{e.fecVen}}</td>
+        <td style="text-align: center">
+            <form method="GET" action="{% url 'admon:evaluarDocente' %}">
+                {% csrf_token %}
+                <input type="hidden" name="docente" value="{{e.profes.codPro}}">
+                <input type="hidden" name="estudiante" value="{{est.pk}}">
+                <input type="submit" class="btn btn-success" style="color:white; background-color:#33CC00" value="Evaluar"></input>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    
+</div>
+
+{% endblock %}

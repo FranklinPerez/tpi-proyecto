@@ -30,3 +30,8 @@ def fecha_Mayor_Que_Hoy(f):
 	hoy = datetime.now().date()
 	if f < hoy:
 		raise ValidationError('La fecha limite debe ser una fecha futura')
+
+
+def no_Respondido(r):
+	if r < 1:
+		raise ValidationError('No ha respondido éste literal')
