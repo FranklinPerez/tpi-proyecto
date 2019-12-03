@@ -19,6 +19,19 @@ class EstudianteForm(forms.ModelForm):
 		    'dirEst':'Direccion',
 		}	
 
+		
+class ProfesorForm(forms.ModelForm):
+	class Meta:
+		model = Profesor
+		fields = {
+			'codPro','nomPro', 'estado',
+		}
+		labels = {
+			'codPro':'Codigo del profesor',
+			'nomPro':'Nombre del profesor',
+		    'estado':'Estado',
+		}
+
 
 
 
@@ -243,3 +256,17 @@ class EvaluacionForm(forms.ModelForm):
 		    'valPreg8':'',
 		    'valPreg9':'',
 		}	
+
+
+
+class ModificarProfesorForm(forms.ModelForm):
+	class Meta:
+		model = Profesor
+		fields = {
+			'codPro','nomPro', 'estado',
+		}
+		labels = {
+			'codPro':'Codigo del profesor',
+			'nomPro':'Nombre del profesor',
+		    'estado':'Estado',
+		}

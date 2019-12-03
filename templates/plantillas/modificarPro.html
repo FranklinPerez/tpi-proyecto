@@ -1,0 +1,29 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Modificacion Datos Profesor {% endblock %}
+
+{% block encabezado %} Modificacion Datos Profesor{% endblock %}
+{% block content %}
+<h3> Modificar Datos Profesor</h3>
+<div class="container">
+	<div class="row">
+<br>
+
+
+    <form role="form" method="POST" >
+            
+    {% csrf_token %}
+         
+    <h4>Modificar Datos Docente: {{object.prof}}</h4>
+    {{form.as_p}}
+    <br><br>
+
+    <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar Cambios">
+
+    <a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+                 
+                 
+        </form>
+  
+
+{% endblock %}

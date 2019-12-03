@@ -1,0 +1,25 @@
+<div class="modal-dialog modal-lg-4">
+	<div class="modal-content">
+
+		<form action=" {% url 'admon:eliminarPro' object.pk %}" method="post">
+
+             <div class="modal-body">
+				{% csrf_token %}
+				<div class="mdl-dialog__content" align="center">
+					<h4> ¿Realmente desea eliminar este profesor? </h4>
+					<br>
+					<br>
+					<h5>Docente: {{object.nomPro}}</h5>
+				</div>
+			</div>
+					<div class="modal-footer">
+			        <div class="col-lg-8 text-right"> 
+
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="background-color:#f6685e;color:white" type="submit">Si, Eliminar</button>
+
+					 <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#33CC00;color:white" onclick="return cerrar_modal()">No, Regresar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

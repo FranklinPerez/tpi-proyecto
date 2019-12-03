@@ -1,0 +1,77 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Gestion de Profesor {% endblock %}
+
+{% block encabezado %} Gestion de Profesor {% endblock %}
+{% block content %}
+<h3>Aqui puede registrar, modificar y eliminar los profesores</h3>
+<div class="container">
+	<div class="row">
+
+	    <a href="{% url 'admon:crearProfesor' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Crear Profesor</a>
+		</a>---
+		<a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado de profesores</a>
+		
+<div id="popup">
+	</div>
+</div><br><br>
+
+<br><br>
+<div class="row text-center">
+	<table  class="table table-sm">
+		<tr style="text-align: center">
+			<th style="text-align: center">Codigo del Profesor</th>
+			<th style="text-align: center">Nombre del Profesor</th>
+			<th style="text-align: center">Estado</th>
+		</tr>
+		{% for pro in profesores %}
+					<tr>
+						<td>{{pro.codPro}}</td>
+						<td>{{pro.nomPro}}</td>
+						<td>{{pro.estado}}
+						<td style="text-align:center;">
+					<a href="{% url 'admon:modificarPro' pro.pk %}" class="btn"><span class="glyphicon glyphicon-pencil">Modificar</a>
+				</td>
+
+				<td style="text-align:center;">
+					<a href="#" onclick="return abrir_modal('{% url 'admon:eliminarPro' pro.pk %}', 'Eliminar Profesor {{ pro}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
+				</td>
+					</tr>
+		{% endfor %}
+	</table>
+</div>
+</div>
+
+
+</div>
+	<script>
+var modal;
+
+function abrir_modal(url, titulo)
+{
+    modal = $('#popup').dialog(
+    {
+        title: titulo,
+        modal: true,
+        width: 600,
+        resizable: false
+    }).dialog('open').load(url)
+}
+
+function cerrar_modal()
+{
+    modal.dialog("close");
+}
+
+$(document).ready(function()
+{
+    var table = $('#tabla').dataTable( {
+        "language": {
+                url: "/static/localizacion/es_ES.json"
+        }
+    } );
+});
+</script>
+
+
+{% endblock %}

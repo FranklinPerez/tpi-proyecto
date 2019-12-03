@@ -69,9 +69,174 @@ def VistaProfesor(request):
         'plantillas/vistaProfesor.html'
     )
 
+<<<<<<< HEAD
 def VistaNota(request):
     estudiantes=Estudiante.objects.filter()
     return render(request, 'plantillas/vistaProfesor.html', {'evP':evP, 'evF':evF})
+=======
+
+class ListadoProfesores(ListView):
+    model = Profesor
+    template_name = 'plantillas/gestionProfesor.html'
+    context_object_name = 'profesores'
+
+class crearProfesor(CreateView):
+    template_name = 'plantillas/crearProfesor.html'
+    form_class = ProfesorForm
+    success_url = reverse_lazy('admon:listado_Profesor')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 6a1deab40b021c5ce4615f54115cc845571974dd
 
 
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
@@ -107,3 +272,18 @@ def evaluarDocente(request):
     form = EvaluacionForm(request.POST)
     return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
 
+<<<<<<< HEAD
+=======
+
+
+class ModificarProfesor(UpdateView):
+    template_name = 'plantillas/modificarPro.html'
+    form_class = ModificarProfesorForm
+    model = Profesor
+    success_url = reverse_lazy('admon:listado_Profesor')
+
+class EliminarProfesor(DeleteView):
+    template_name = 'plantillas/eliminarProfesor.html'
+    model = Profesor
+    success_url = reverse_lazy('admon:listado_Profesor')    
+>>>>>>> 6a1deab40b021c5ce4615f54115cc845571974dd

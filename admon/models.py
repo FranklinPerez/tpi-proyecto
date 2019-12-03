@@ -83,9 +83,15 @@ class Materia(models.Model):
 
 # modelo para los profesores
 class Profesor(models.Model):
+
 	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
 	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
 	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+
+	codPro=models.CharField(max_length=15,help_text="", primary_key=True)
+	nomPro=models.CharField(max_length=100,help_text="",validators=[solo_Letras])	
+	
+
 	ESTADO= (
 
 		('a','activo'),
@@ -98,7 +104,7 @@ class Profesor(models.Model):
         choices=ESTADO,
         blank=True,
         default='a',
-        help_text='Tipo de usuario en el sistema')
+        help_text='')
 
 	def __str__(self):
 		return self.nomPro

@@ -1,0 +1,33 @@
+{% extends 'base/base.html'%}
+
+{% block title %}crear Profesor {% endblock %}
+
+{% block encabezado %}Crear Profesor {% endblock %}
+{% block content %}
+<h3> Crear Nuevo Profesor</h3>
+<br>
+<br>
+
+      
+    <div>
+        <form role="form" method="POST" >
+            
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td width="600">
+                        {{form.as_p}}
+                        <br><br><br>
+
+                        <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Aceptar">
+
+                        <a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a>
+                 
+                 
+               </tr>
+            </table>             
+        </form>
+    </div> 
+
+
+{% endblock %}
