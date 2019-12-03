@@ -69,11 +69,11 @@ def VistaProfesor(request):
         'plantillas/vistaProfesor.html'
     )
 
-<<<<<<< HEAD
+
 def VistaNota(request):
     estudiantes=Estudiante.objects.filter()
     return render(request, 'plantillas/vistaProfesor.html', {'evP':evP, 'evF':evF})
-=======
+
 
 class ListadoProfesores(ListView):
     model = Profesor
