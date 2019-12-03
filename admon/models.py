@@ -16,8 +16,8 @@ class Usuario(models.Model):
 		('s', 'Secretaria'),		
 
 		('e','Estudiante'),
-		('d', 'Docente'),
-		('d', 'Orientador'),		
+		
+		('o', 'Orientador'),		
 
 		)
 
@@ -25,7 +25,7 @@ class Usuario(models.Model):
         max_length=10,
         choices=TIPO_USUARIO,
         blank=True,
-        default='sssssqqqqq',
+        default='Estudiante',
         help_text='Tipo de usuario en el sistema')
 
 	def __str__(self):
@@ -41,6 +41,7 @@ class Estudiante(models.Model):
 	graEst=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)	
 	dirEst=models.CharField(max_length=100,help_text="Direccion del estudiante")
 	edadEst=models.IntegerField(help_text="Edad actual del estudiante", null=True, blank=True)
+	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
 	def __str__(self):
 		return self.nieEst
 #fin modelo para los estudiantes del sistema
@@ -84,7 +85,7 @@ class Materia(models.Model):
 class Profesor(models.Model):
 	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
 	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
-	
+	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
 	ESTADO= (
 
 		('a','activo'),
@@ -123,7 +124,7 @@ class Actividad(models.Model):
         max_length=10,
         choices=TIPO_NOTA,
         blank=True,
-        default='sssssqqqqq',
+        default='normal',
         help_text='Tipo de notadel estudiante')
 
 #fin modelo para registro de nota
@@ -145,12 +146,15 @@ class Municipio(models.Model):
 		return self.nomMunicipio	
 #fin modelo para municipio
 
-<<<<<<< HEAD
 class Mes(models.Model):
 	nomMes=models.CharField(max_length=15,primary_key=True)
 	anio=models.CharField(max_length=4, help_text="año del Mes")
 
-=======
+class Secretaria(models.Model):
+	codSec=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
+	nomSec=models.CharField(max_length=100,help_text="nombre del profesor")	
+	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+
 
 
 

@@ -63,160 +63,15 @@ class crearEstudiante(CreateView):
     form_class = EstudianteForm
     success_url = reverse_lazy('admon:listado_estudiante')
 
-
-
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def VistaProfesor(request):
+    return render(
+        request,
+        'plantillas/vistaProfesor.html'
+    )
+
+def VistaNota(request):
+    estudiantes=Estudiante.objects.filter()
+    return render(request, 'plantillas/vistaProfesor.html', {'evP':evP, 'evF':evF})
 
 
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
@@ -251,4 +106,4 @@ def evaluarDocente(request):
     e = EvaluacionDocente.objects.get(estado = 1)
     form = EvaluacionForm(request.POST)
     return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
->>>>>>> 19a68492a6cec28be77738b38b5fe1df252015ea
+
