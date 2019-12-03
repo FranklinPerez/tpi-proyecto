@@ -236,7 +236,7 @@ class crearProfesor(CreateView):
 
 
 
->>>>>>> 6a1deab40b021c5ce4615f54115cc845571974dd
+
 
 
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
@@ -272,8 +272,7 @@ def evaluarDocente(request):
     form = EvaluacionForm(request.POST)
     return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
 
-<<<<<<< HEAD
-=======
+
 
 
 class ModificarProfesor(UpdateView):
@@ -286,4 +285,4 @@ class EliminarProfesor(DeleteView):
     template_name = 'plantillas/eliminarProfesor.html'
     model = Profesor
     success_url = reverse_lazy('admon:listado_Profesor')    
->>>>>>> 6a1deab40b021c5ce4615f54115cc845571974dd
+
