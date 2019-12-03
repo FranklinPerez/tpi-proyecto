@@ -25,12 +25,7 @@
         <td width="200" style="text-align: center">{{e.profes}}</td>
         <td style="text-align: center">{{e.fecVen}}</td>
         <td style="text-align: center">
-            <form method="GET" action="{% url 'admon:evaluarDocente' %}">
-                {% csrf_token %}
-                <input type="hidden" name="docente" value="{{e.profes.codPro}}">
-                <input type="hidden" name="estudiante" value="{{est.pk}}">
-                <input type="submit" class="btn btn-success" style="color:white; background-color:#33CC00" value="Evaluar"></input>
-            </form>
+            <a href="{% url 'admon:evaluarDocente' est.pk e.profes.codPro %}" class="btn btn-success" style="color:white; background-color:#33CC00">Evaluar</a>
         </td>
     </tr>
     {% endfor %}

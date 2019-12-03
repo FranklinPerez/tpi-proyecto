@@ -66,7 +66,15 @@ class crearEstudiante(CreateView):
 
 
 
+class ListadoProfesores(ListView):
+    model = Profesor
+    template_name = 'plantillas/gestionProfesor.html'
+    context_object_name = 'profesores'
 
+class crearProfesor(CreateView):
+    template_name = 'plantillas/crearProfesor.html'
+    form_class = ProfesorForm
+    success_url = reverse_lazy('admon:listado_Profesor')
 
 
 
@@ -217,6 +225,9 @@ class crearEstudiante(CreateView):
 
 
 
+
+
+###   CODIGO DE RUDDY   ===============================================
 
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
 class armarEvaluacion(CreateView):
@@ -249,23 +260,23 @@ def EvaluacionesPendientes(request):
     pk = request.GET.get('action', None)
 
     e = EvaluacionDocente.objects.filter(estado = 1).filter(profes__registro__notEst_id = pk).distinct()
+
     est = Estudiante.objects.get(nieEst = pk)
     return render(request, 'plantillas/evPendientes.html', {'e':e,'est':est})
 
 # Vista del estudiante para evaluar al docente-------------------------------------
-def evaluarDocente(request):
-    pk = request.GET.get('docente', None)
-    epk = request.GET.get('estudiante', None)
+def evaluarDocente(request, pk, pk2):
+    est = Estudiante.objects.get(nieEst = pk)
+    ev = EvaluacionDocente.objects.filter(estado = 1).get(profes_id = pk2)
+    if request.method == 'POST':
+        form = EvaluacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admon:perfilE', est.usuario.codUsu)
+    else:
+        form=EvaluacionForm()
 
-    e = EvaluacionDocente.objects.filter(estado = 1).filter(profes_id = pk)[0]
-    est = Estudiante.objects.get(nieEst = epk)
-    form = EvaluacionForm(request.GET, instance = e)
-    copy = form.save()
-    copy.pk = None
-    copy.estado = 2
-    copy.save()
-    
-    return render(request, 'plantillas/evaluarDocente.html', {'form':form,'est':est,'e':e} )
+    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'ev':ev})
 
 def verNotas(request):
     pk = request.GET.get('action', None)
@@ -282,4 +293,22 @@ def PerfilEstudiante(request, username):
     form = PerfilEstudianteForm(request.POST, instance = e)
 
     return render(request, 'plantillas/perfilEstudiante.html', {'form':form, 'e':e})
+
+    e = EvaluacionDocente.objects.get(estado = 1)
+    form = EvaluacionForm(request.POST)
+    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
+
+##### FINAL CODIGO DE RUDDY     =================================================================================
+
+
+class ModificarProfesor(UpdateView):
+    template_name = 'plantillas/modificarPro.html'
+    form_class = ModificarProfesorForm
+    model = Profesor
+    success_url = reverse_lazy('admon:listado_Profesor')
+
+class EliminarProfesor(DeleteView):
+    template_name = 'plantillas/eliminarProfesor.html'
+    model = Profesor
+    success_url = reverse_lazy('admon:listado_Profesor')    
 

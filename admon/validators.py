@@ -32,6 +32,11 @@ def fecha_Mayor_Que_Hoy(f):
 		raise ValidationError('La fecha limite debe ser una fecha futura')
 
 
-def no_Respondido(r):
-	if r < 1:
-		raise ValidationError('No ha respondido éste literal')
+def solo_ac_in(value):
+	
+	letras = " ai";
+
+	for i in value:
+		if i not in letras:
+			raise ValidationError('escoja activo o inactivo')		
+

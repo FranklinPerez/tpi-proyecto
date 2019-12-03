@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
-from .validators import solo_Letras, solo_Numeros, fecha_Mayor_Que_Hoy, no_Respondido
+from .validators import solo_Letras, solo_Numeros, fecha_Mayor_Que_Hoy, solo_ac_in
 from django.core.exceptions import ValidationError
 
 # Create your models here.
@@ -83,8 +83,8 @@ class Materia(models.Model):
 
 # modelo para los profesores
 class Profesor(models.Model):
-	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
-	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
+	codPro=models.CharField(max_length=15,help_text="", primary_key=True)
+	nomPro=models.CharField(max_length=100,help_text="",validators=[solo_Letras])	
 	
 	ESTADO= (
 
@@ -98,7 +98,7 @@ class Profesor(models.Model):
         choices=ESTADO,
         blank=True,
         default='a',
-        help_text='Tipo de usuario en el sistema')
+        help_text='')
 
 	def __str__(self):
 		return self.nomPro
@@ -353,23 +353,28 @@ class EvaluacionDocente(models.Model):
 	fecVen = models.DateField(null=False, blank=False, validators = [fecha_Mayor_Que_Hoy])
 	profes = models.ForeignKey('Profesor', on_delete = models.PROTECT, null=False)
 
-	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
-
-	valPreg0 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg1 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg2 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg3 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg4 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg5 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg6 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg7 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg8 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True, validators=[no_Respondido])
-
-	totalE = models.IntegerField( null=True, blank = True)
-
 	ESTADO= ((1,'Pendiente'),(2, 'Finalizada'),)
 	estado= models.IntegerField( choices=ESTADO, blank=True, default=1)
-	estudiante= models.ForeignKey('Estudiante', on_delete= models.PROTECT, null =True, blank=True)
+
+	def __str__(self):
+		return self.profes.nomPro 
+
+class Evaluacion(models.Model):
+	evaluacion = models.ForeignKey('EvaluacionDocente', on_delete=models.PROTECT, null=True)
+
+	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
+
+	valPreg0 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg1 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg2 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg3 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg4 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg5 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg6 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg7 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg8 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+
+	totalE = models.IntegerField( null=True)
 
 # Fin Modelo EvaluacionDocente

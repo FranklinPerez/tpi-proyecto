@@ -12,6 +12,9 @@ urlpatterns=[
 	path('bienvenida', bienvenida, name='bienvenida'),
 	path('gestionEstudiante/', ListadoEstudiante.as_view(), name='listado_estudiante'),
 	path('matricula/', crearEstudiante.as_view(), name='crear_estudiante'),
+	path('gestionProfesor/', ListadoProfesores.as_view(), name='listado_Profesor'),
+    path('registrarProfesor/', crearProfesor.as_view(), name='crearProfesor'),
+
 
 
 
@@ -74,6 +77,9 @@ urlpatterns=[
 	path('modificarEv/<int:pk>/', ModificarEvaluacion.as_view(), name = 'modificarEv'),
 	path('evaluacionPendiente/', EvaluacionesPendientes, name='evPendientes'),
 	path('perfilEstudiante/<username>/', PerfilEstudiante, name = 'perfilE'),
-	path('evaluarDocente/', evaluarDocente, name='evaluarDocente'),
+	path('evaluarDocente/<int:pk>/<int:pk2>/', evaluarDocente, name='evaluarDocente'),
 	path('verNotas/', verNotas, name='verNotas'),
+
+	path('modificarProfesor/<int:pk>/', ModificarProfesor.as_view(), name = 'modificarPro'),
+	path('eliminarProfesor/<int:pk>/', EliminarProfesor.as_view(), name = 'eliminarPro'),
 	]

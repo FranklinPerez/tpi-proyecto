@@ -19,6 +19,19 @@ class EstudianteForm(forms.ModelForm):
 		    'dirEst':'Direccion',
 		}	
 
+		
+class ProfesorForm(forms.ModelForm):
+	class Meta:
+		model = Profesor
+		fields = {
+			'codPro','nomPro', 'estado',
+		}
+		labels = {
+			'codPro':'Codigo del profesor',
+			'nomPro':'Nombre del profesor',
+		    'estado':'Estado',
+		}
+
 
 
 
@@ -217,8 +230,9 @@ class ModificarEvaluacionForm(forms.ModelForm):
 
 class EvaluacionForm(forms.ModelForm):
 	class Meta:
-		model = EvaluacionDocente
+		model = Evaluacion
 		fields = {
+			'evaluacion',
 			'valPreg0', 
 			'valPreg1',
 			'valPreg2',
@@ -232,6 +246,7 @@ class EvaluacionForm(forms.ModelForm):
 			'totalE',
 		}
 		labels = {
+			'evaluacion': 'Docente',
 			'valPreg0':'',
 		    'valPreg1':'',
 		    'valPreg2':'',
@@ -242,7 +257,7 @@ class EvaluacionForm(forms.ModelForm):
 		    'valPreg7':'',
 		    'valPreg8':'',
 		    'valPreg9':'',
-		    'totalE':''
+		    'totalE':'',
 		}
 		widgets ={
 			'totalE' : forms.TextInput(attrs={'type':'hidden'}),
@@ -258,4 +273,18 @@ class PerfilEstudianteForm(forms.ModelForm):
 			'nomEst':'',
 			'apeEst':'',
 			'graEst':'',
+		}	
+
+
+
+class ModificarProfesorForm(forms.ModelForm):
+	class Meta:
+		model = Profesor
+		fields = {
+			'codPro','nomPro', 'estado',
+		}
+		labels = {
+			'codPro':'Codigo del profesor',
+			'nomPro':'Nombre del profesor',
+		    'estado':'Estado',
 		}

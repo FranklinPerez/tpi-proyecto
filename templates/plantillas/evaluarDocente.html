@@ -8,17 +8,17 @@
 <h5> Por Favor Evalúe de manera sincera y objetiva</h5>
 
     <div>
-        <h3>Docente: {{e.profes }}</h3>
-        <h5>Fecha Limite: {{ e.fecVen }}</h5>
+        <h3>Docente: {{ev.profes }}</h3>
     </div>
     <br>
     <div>
-        <form role="form" method="get" action="{% url 'admon:perfilE' est.usuario.codUsu%}">
+        <form  method="POST" id="evForm" >
             
             {% csrf_token %}
         
             <table border="2">
                 <tbody>
+                    {{form.evaluacion}}
                     <tr>
                         <tr>
                             <td><b> 1-> </b></td>
@@ -75,7 +75,7 @@
                     
                 </tbody>                            
             </table>
-                                 
+            <br><br>                  
             <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
                              
         </form>
@@ -123,25 +123,64 @@
         $("#id_valPreg9").on("change", getTotal); 
     });
 
+    
+
     function getTotal(){
+        var sel0 = document.getElementById('id_valPreg0');
+        var s0 = sel0.options[sel0.selectedIndex].value
+
+        var sel1 = document.getElementById('id_valPreg1');
+        var s1 = sel1.options[sel1.selectedIndex].value
+
+        var sel2 = document.getElementById('id_valPreg2');
+        var s2 = sel2.options[sel2.selectedIndex].value
+
+        var sel3 = document.getElementById('id_valPreg3');
+        var s3 = sel3.options[sel3.selectedIndex].value
+
+        var sel4 = document.getElementById('id_valPreg4');
+        var s4 = sel4.options[sel4.selectedIndex].value
+
+        var sel5 = document.getElementById('id_valPreg5');
+        var s5 = sel5.options[sel5.selectedIndex].value
+
+        var sel6 = document.getElementById('id_valPreg6');
+        var s6 = sel6.options[sel6.selectedIndex].value
+
+        var sel7 = document.getElementById('id_valPreg7');
+        var s7 = sel7.options[sel7.selectedIndex].value
+
+        var sel8 = document.getElementById('id_valPreg8');
+        var s8 = sel8.options[sel8.selectedIndex].value
+
+        var sel9 = document.getElementById('id_valPreg9');
+        var s9 = sel9.options[sel9.selectedIndex].value
+
         var c = 0;
-        var array = [$("#id_valPreg0").val(),
-                    $("#id_valPreg1").val(),
-                    $("#id_valPreg2").val(),
-                    $("#id_valPreg3").val(),
-                    $("#id_valPreg4").val(),
-                    $("#id_valPreg5").val(),
-                    $("#id_valPreg6").val(),
-                    $("#id_valPreg7").val(),
-                    $("#id_valPreg8").val(),
-                    $("#id_valPreg9").val()];
+        var array = [s0,s1,s2,s3,s4,s5,s6,s7,s8,s9];
 
         for (var i = array.length - 1; i >= 0; i--) {
-            c += array[i];
+            if(array[i] == 1)
+                c += 1;
+            else if(array[i] == 2)
+                c += 2;
+            else if(array[i] == 3)
+                c += 3;
+            else if(array[i] == 4)
+                c += 4;
+            else if(array[i] == 5)
+                c += 5;
         }
+        
+        document.getElementById('id_totalE').value = c;
 
-        form.totalE.val() = c;
+        
+        document.getElementById('id_evaluacion') = ev.id;
+        
     }
 
 </script>
+
+
+
 {% endblock %}
