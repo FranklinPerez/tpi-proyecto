@@ -1,0 +1,23 @@
+<div class="modal-dialog modal-lg-4">
+	<div class="modal-content">
+
+		<form action=" {% url 'admon:gestionEvaluacion' %}" method="post">
+
+             <div class="modal-body">
+				{% csrf_token %}
+				<div class="mdl-dialog__content" align="center">
+					<h5>Se ha cambiado el estado de las Evaluaciones a "Realizadas" ( Estado = 2)</h5>
+					
+					<br>
+					
+				</div>
+			</div>
+					<div class="modal-footer">
+			                                <div class="col-lg-8 text-right"> 
+
+					<a href="{% url 'admon:gestionEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Hecho</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

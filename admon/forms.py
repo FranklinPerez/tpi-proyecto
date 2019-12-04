@@ -254,8 +254,9 @@ class ModificarEvaluacionForm(forms.ModelForm):
 
 class EvaluacionForm(forms.ModelForm):
 	class Meta:
-		model = EvaluacionDocente
+		model = Evaluacion
 		fields = {
+			'evaluacion',
 			'valPreg0', 
 			'valPreg1',
 			'valPreg2',
@@ -266,9 +267,11 @@ class EvaluacionForm(forms.ModelForm):
 			'valPreg7',
 			'valPreg8',
 			'valPreg9',
-
+			'totalE',
+			'estudiante',
 		}
 		labels = {
+			'evaluacion': '',
 			'valPreg0':'',
 		    'valPreg1':'',
 		    'valPreg2':'',
@@ -279,6 +282,25 @@ class EvaluacionForm(forms.ModelForm):
 		    'valPreg7':'',
 		    'valPreg8':'',
 		    'valPreg9':'',
+		    'totalE':'',
+		    'estudiante':'',
+		}
+		widgets ={
+			'evaluacion' : forms.TextInput(attrs={'type':'hidden'}),
+			'totalE' : forms.TextInput(attrs={'type':'hidden'}),
+			'estudiante' : forms.TextInput(attrs={'type':'hidden'}),
+		}
+
+
+
+class PerfilEstudianteForm(forms.ModelForm):
+	class Meta:
+		model = Estudiante
+		fields = {'nomEst', 'apeEst', 'graEst'}
+		labels = {
+			'nomEst':'',
+			'apeEst':'',
+			'graEst':'',
 		}	
 
 

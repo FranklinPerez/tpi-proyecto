@@ -1,0 +1,42 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Evaluaciones Pendientes {% endblock %}
+
+{% block encabezado %} Evaluaciones Pendientes {% endblock %}
+
+{% block content %}
+
+<div class="row text-center">
+    <h3>Evaluaciones Pendientes.</h3>
+    <h4>Se muestran las evaluacicones pendientes</h4>
+<br>
+{% if ev %}
+<table  class="table table-sm" border="1">
+    <tr style="text-align: center">
+        <th style="text-align: center"> Docente </th>
+        <th style="text-align: center">Fecha Límite </th>
+
+    </tr>
+    {% for e in ev %} <!-- Info por materia-->
+    <tr>
+        <td width="300" style="text-align: center">{{e.profes}}</td>
+        <td width="300" style="text-align: center">{{e.fecVen}}</td>
+        <td width="200" style="text-align: center">
+            <a href="{% url 'admon:evaluarDocente' est.pk e.profes.codPro %}" class="btn btn-success" style="color:white; background-color:#33CC00">Evaluar</a>
+        </td>
+    </tr>
+    {% endfor %}
+    <br><br>
+{% else %}
+    <h2>No tienes Evaluaciones de Docentes Pendientes</h2>
+{% endif %}
+
+</table>
+    
+<script type="text/javascript">
+    
+</script>
+
+</div>
+
+{% endblock %}

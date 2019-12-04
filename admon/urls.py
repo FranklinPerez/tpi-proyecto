@@ -1,5 +1,5 @@
 from .ajax import load_Docentes
-from django.urls import path, include
+from django.urls import path, include, re_path
 from .views import *
 
 app_name = 'admon'
@@ -92,7 +92,11 @@ urlpatterns=[
 	path('evArmada', evArmada, name='armada'),
 	path('gestionEvaluacion/', evaluationManager, name='gestionEvaluacion'),
 	path('cancelarEv/<int:pk>/', CancelarEvaluacion.as_view(), name = 'cancelarEv'),
+	path('estadoEvaluacion/', estadoEvaluacion, name = 'estadoEv'),
 	path('modificarEv/<int:pk>/', ModificarEvaluacion.as_view(), name = 'modificarEv'),
-	path('evaluarDocente/', evaluarDocente, name='evaluarDocente'),
+	path('evaluacionPendiente/<pk>/', EvaluacionesPendientes, name='evPendientes'),
+	path('perfilEstudiante/<username>/', PerfilEstudiante, name = 'perfilE'),
+	path('evaluarDocente/<int:pk>/<int:pk2>/', evaluarDocente, name='evaluarDocente'),
+	path('verNotas/', verNotas, name='verNotas'),
 
 	]

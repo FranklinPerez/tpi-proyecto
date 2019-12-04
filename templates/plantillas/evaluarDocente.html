@@ -8,17 +8,19 @@
 <h5> Por Favor Evalúe de manera sincera y objetiva</h5>
 
     <div>
-        <h3>Docente: {{ e.profes }}</h3>
-        <h3>Fecha Limite: {{ e.fecVen }}</h3>
+        <h3>Docente: {{ev.profes }}</h3>
     </div>
-      
     <div>
-        <form role="form" method="post">
+        <form  method="POST" id="evForm" >
             
             {% csrf_token %}
         
-            <table border="1">
+            <table border="2">
                 <tbody>
+                    {{form.evaluacion}}
+                    {{form.totalE}}
+                    {{form.estudiante}}
+                    
                     <tr>
                         <tr>
                             <td><b> 1-> </b></td>
@@ -48,41 +50,146 @@
                         <tr>
                             <td><b> 6-> </b></td>
                             <td>Entrega las calificaciones de exámenes, tareas y demás actividades en la fecha acordada.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg5 }}</td>
                         </tr>
                         <tr>
                             <td><b> 7-> </b></td>
                             <td>Motiva a los estudiantes a seguir aprendiendo y asistiendo a clases.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg6 }}</td>
                         </tr>
                         <tr>
                             <td><b> 8-> </b></td>
                             <td>Resuelve dudas sobre los temas de estudio, aún fuera de las horas de clase.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg7 }}</td>
                         </tr>
                         <tr>
                             <td><b> 9-> </b></td>
                             <td>Califica las tareas, exámenes, exposiciones y demás actividades  académicas de forma imparcial y objetiva.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg8 }}</td>
                         </tr>
                         <tr>
                             <td><b> 10-> </b></td>
                             <td>Es notorio su interés por que los estudiantes realmente aprendan en sus clases.</td>
-                            <td>{{ form.valPreg4 }}</td>
+                            <td>{{ form.valPreg9 }}</td>
                         </tr>
 
                     </tr>
                     
                 </tbody>                            
             </table>
-                                 
-                                            
-            
-            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
 
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="background-color:#f6685e;color:white">Cancelar</button>
+            <input type="hidden" name="evId" id="id_evId" value="{{ev.numEva}}">
+            <input type="hidden" name="estId" id="id_estId" value="{{est.nieEst}}">
+
+            <br><br>                  
+            <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
                              
         </form>
     </div> 
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        $("#id_valPreg0").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg1").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg2").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg3").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg4").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg5").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg6").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg7").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg8").on("change", getTotal); 
+    });
+
+    $(document).ready(function(){
+        $("#id_valPreg9").on("change", getTotal); 
+    });
+
+    
+
+    function getTotal(){
+        var sel0 = document.getElementById('id_valPreg0');
+        var s0 = sel0.options[sel0.selectedIndex].value
+
+        var sel1 = document.getElementById('id_valPreg1');
+        var s1 = sel1.options[sel1.selectedIndex].value
+
+        var sel2 = document.getElementById('id_valPreg2');
+        var s2 = sel2.options[sel2.selectedIndex].value
+
+        var sel3 = document.getElementById('id_valPreg3');
+        var s3 = sel3.options[sel3.selectedIndex].value
+
+        var sel4 = document.getElementById('id_valPreg4');
+        var s4 = sel4.options[sel4.selectedIndex].value
+
+        var sel5 = document.getElementById('id_valPreg5');
+        var s5 = sel5.options[sel5.selectedIndex].value
+
+        var sel6 = document.getElementById('id_valPreg6');
+        var s6 = sel6.options[sel6.selectedIndex].value
+
+        var sel7 = document.getElementById('id_valPreg7');
+        var s7 = sel7.options[sel7.selectedIndex].value
+
+        var sel8 = document.getElementById('id_valPreg8');
+        var s8 = sel8.options[sel8.selectedIndex].value
+
+        var sel9 = document.getElementById('id_valPreg9');
+        var s9 = sel9.options[sel9.selectedIndex].value
+
+        var c = 0;
+        var array = [s0,s1,s2,s3,s4,s5,s6,s7,s8,s9];
+
+        for (var i = array.length - 1; i >= 0; i--) {
+            if(array[i] == 1)
+                c += 1;
+            else if(array[i] == 2)
+                c += 2;
+            else if(array[i] == 3)
+                c += 3;
+            else if(array[i] == 4)
+                c += 4;
+            else if(array[i] == 5)
+                c += 5;
+        }
+        
+        document.getElementById('id_totalE').value = c;
+
+        var evaluac = document.getElementById('id_evId').value;
+        document.getElementById('id_evaluacion').value = evaluac;
+
+        var estud = document.getElementById('id_estId').value;
+        document.getElementById('id_estudiante').value = estud;
+        
+    }
+
+</script>
+
+
 
 {% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Notas de Estudiante {% endblock %}
+
+{% block encabezado %} Notas de Estudiante {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h3>Resumen de Notas.</h3>
+    <h4>Se muestran las materias que ya tienen almenos una nota guardada</h4>
+    <br>
+<div>   
+    <h3>Estudiante: {{e.nomEst}} {{e.apeEst}}</h3>
+    <h4>Grado: {{ e.graEst.nomGra }}, Sección: {{ e.graEst.seccion }}</h4>
+</div>
+
+<br>
+
+
+<table  class="table table-sm">
+    <tr>
+        <td><h4>Año: {{r.1.year}}</h4></td>
+    </tr>
+    <tr style="text-align: center">
+        <th style="text-align: center"> Materia </th>
+        <th style="text-align: center">Periodo </th>
+        <th style="text-align: center">Nota </th>
+        <th style="text-align: center">ponderación </th>
+        <th style="text-align: center"> Tipo (n : Normal, r : Reposición)</th>
+    </tr>
+    <tr>
+        <td>
+            {% for m in m %}
+            <tr>
+                <td style="text-align: center">{{m.codMat}}</td>  
+                <td>
+                {% for r in r %} <!-- Info por materia-->
+                    <tr>
+                    {% if r.notMat.codMat == m.codMat %}
+                    <td style="text-align: center"></td>
+                    <td style="text-align: center">{{r.periodo}}</td>
+                    <td style="text-align: center" id="nota" >{{r.nota}}</td>
+                    <td style="text-align: center" id="pon" >{{r.ponNot}}</td>
+                    <td style="text-align: center">{{r.tipo_nota}}</td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+                </td>
+            </tr>
+           
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+    
+</div>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import *
 from django.utils import timezone
-from .validators import solo_Letras, solo_Numeros, fecha_Mayor_Que_Hoy
+from .validators import solo_Letras, solo_Numeros, fecha_Mayor_Que_Hoy, solo_ac_in
 from django.core.exceptions import ValidationError
 
 # Create your models here.
@@ -40,7 +40,9 @@ class Estudiante(models.Model):
 	fecNac=models.DateField(null=False, blank=True)
 	dirEst=models.CharField(max_length=100,help_text="Direccion del estudiante")
 	edadEst=models.IntegerField(help_text="Edad actual del estudiante", null=True, blank=True)
-	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+
+	usuario = models.ForeignKey('Usuario', on_delete = models.SET_NULL, null=True)
+
 	def __str__(self):
 		return self.nomEst
 #fin modelo para los estudiantes del sistema
@@ -119,6 +121,28 @@ class Actividad(models.Model):
 	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")	
 	notMat=models.ForeignKey('Materia', on_delete=models.SET_NULL, null=True)
 	notEst=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
+
+	notPro=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
+
+	year = models.IntegerField(null=False, blank=False, default=datetime.now().year) # GREGADO PRO RUDDY PARA FILTRAR NOTAS
+
+	PERIODO= (
+
+		('1', '1er periodo'),
+		('2', '2do periodo'),
+		('3', '3er periodo'),
+		('4', '4to periodo'),			
+
+		)
+
+	periodo= models.CharField(
+        max_length=15,
+        choices=PERIODO,
+        blank=True,
+        default='1',
+        help_text='Tipo de nota del estudiante')
+
+
 	mes=models.ForeignKey('Mes', on_delete=models.SET_NULL, null=True)
 
 	TIPO_NOTA= (
@@ -358,23 +382,34 @@ class EvaluacionDocente(models.Model):
 	fecVen = models.DateField(null=False, blank=False, validators = [fecha_Mayor_Que_Hoy])
 	profes = models.ForeignKey('Profesor', on_delete = models.PROTECT, null=False)
 
-	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
-
-	valPreg0 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg1 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg2 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg3 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg4 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg5 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg6 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg7 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg8 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=True, blank = True)
-
-	totalE = models.IntegerField( null=True, blank = True)
-
 	ESTADO= ((1,'Pendiente'),(2, 'Finalizada'),)
 	estado= models.IntegerField( choices=ESTADO, blank=True, default=1)
 
+	def __str__(self):
+		return self.profes.nomPro 
+
+class Evaluacion(models.Model):
+	evaluacion = models.ForeignKey('EvaluacionDocente', on_delete = models.PROTECT, null=True)
+
+	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
+
+	valPreg0 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg1 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg2 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg3 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg4 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg5 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg6 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg7 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg8 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
+
+	totalE = models.IntegerField( null=True)
+	estudiante = models.ForeignKey('Estudiante', on_delete = models.PROTECT, null = True )
+
+
+<<<<<<< HEAD
 # Fin Modelo EvaluacionDocente
 
+=======
+>>>>>>> cc4c2408dab4260695938a07b68666277c94634c

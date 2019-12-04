@@ -39,3 +39,4 @@ def solo_ac_in(value):
 	for i in value:
 		if i not in letras:
 			raise ValidationError('escoja activo o inactivo')		
+

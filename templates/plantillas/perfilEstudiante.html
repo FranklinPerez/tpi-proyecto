@@ -1,0 +1,41 @@
+{% extends 'base/base.html'%}
+
+{% block title %} Perfil de Estudiante {% endblock %}
+
+{% block encabezado %} Perfil de Estudiante {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h3>Expediente</h3>
+    <h3> Bienvenido: {{e.nomEst}} {{e.apeEst}}</h3>
+    <h4>Grado: {{ e.graEst.nomGra }}, Sección: {{ e.graEst.seccion }}</h4>
+</div>
+<br>
+<div>
+    <table >
+        <tr>
+            <td width="400" style="text-align: center">
+                <form method="GET" action="{% url 'admon:verNotas' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="{{e.pk}}">
+                    <input type="submit" class="btn btn-success" style="color:white; background-color:#33CC00" value="Rsumen de Notas"></input>
+                </form>
+            </td>
+            <td width="400" style="text-align: center">
+               <a class="btn btn-success" href="{% url 'admon:evPendientes' e.pk %}" class="btn btn-success" style="color:white; background-color:#33CC00">Evaluación de Docentes</a>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <p>Aqui puedes ver todas tus calificaciones</p>
+            </td>
+            <td style="text-align: center">
+                <p>Aqui puedes evaluar el desempeño de tus Docentes, si hay una evaluación pendiente</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

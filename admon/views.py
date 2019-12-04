@@ -7,7 +7,11 @@ from .forms import *
 from datetime import *
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
+
 import urllib
+
+from django.db.models import Q
+
 # Create your views here.
 def index(request):   
 
@@ -29,12 +33,25 @@ def autenticarUsuario(request):
     contrasena = request.POST.get('password')
     filtro = Usuario.objects.filter(codUsu=usuario).filter(pasUsu=contrasena).values('tipo_usuario')
     if filtro:
+
         if filtro[0].get('tipo_usuario')=='p':
             materias=Materia.objects.filter(profesor__usuario__codUsu=usuario)
             
             return render(request, 'plantillas/vistaProfesor.html',context = {'materias':materias, 'profesor':usuario})
         if filtro[0].get('tipo_usuario')=='s':
             return render(request,'plantillas/secretaria.html') 
+
+
+    	if filtro[0].get('tipo_usuario')=='p':
+    		return redirect('admon:bienvenida')            
+
+    	if filtro[0].get('tipo_usuario')=='e':
+    		return redirect('admon:perfilE', username)   #sustituir listado_consulta por el del estudiante        
+
+    	else:
+    		if filtro[0].get('tipo_usuario')=='d': 
+    		  return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
+
     else:
         return render(request,'plantillas/errorUsuario.html')	
 
@@ -280,7 +297,7 @@ class EliminarGrado(DeleteView):
 
 
 
-
+###   CODIGO DE RUDDY   ===============================================
 
 
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
@@ -295,9 +312,11 @@ def evArmada(request):
 
 # Vista para que la Secre borre o modifique la evaluacion-------------------
 def evaluationManager(request):
-    evP = EvaluacionDocente.objects.filter(estado = 1)
+    evP = EvaluacionDocente.objects.filter(estado = 1).order_by('fecVen')
     evF = EvaluacionDocente.objects.filter(estado = 2)
-    return render(request, 'plantillas/evaluationManager.html', {'evP':evP, 'evF':evF})
+    ev = EvaluacionDocente.objects.filter(estado = 1).filter(fecVen__lt = datetime.now())
+
+    return render(request, 'plantillas/evaluationManager.html', {'evP':evP, 'evF':evF,'ev':ev})
 
 class CancelarEvaluacion(DeleteView):
     template_name = 'plantillas/cancelarEvaluacion.html'
@@ -310,12 +329,53 @@ class ModificarEvaluacion(UpdateView):
     model = EvaluacionDocente
     success_url = reverse_lazy('admon:gestionEvaluacion')
 
+def estadoEvaluacion(request):
+    e = EvaluacionDocente.objects.filter(estado = 1).filter(fecVen__lt = datetime.now()).update(estado = 2)
+    return render(request, 'plantillas/estadoEvaluacion.html', {'e':e})
+   
+
+def EvaluacionesPendientes(request, pk):
+    ev = EvaluacionDocente.objects.filter(estado = 1).order_by('numEva').filter(profes__actividad__notEst_id = pk).exclude(evaluacion__estudiante_id = pk).distinct()
+    est = Estudiante.objects.get(pk = pk)
+    
+    return render(request, 'plantillas/evPendientes.html', {'ev':ev,'est':est})
+
 # Vista del estudiante para evaluar al docente-------------------------------------
-def evaluarDocente(request):
+def evaluarDocente(request, pk, pk2):
+    est = Estudiante.objects.get(nieEst = pk)
+    ev = EvaluacionDocente.objects.filter(estado = 1).get(profes__codPro = pk2)
+
+    if request.method == 'POST':
+        form = EvaluacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admon:evPendientes', est.nieEst)
+    else:
+        form=EvaluacionForm()
+
+    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'ev':ev, 'est':est})
+
+def verNotas(request):
+    pk = request.GET.get('action', None)
+
+    e = Estudiante.objects.get(nieEst = pk)
+    r = Actividad.objects.filter(notEst = pk).filter(year = datetime.now().year).order_by('notMat', 'periodo')
+    m = Materia.objects.filter(actividad__notEst = pk).filter(actividad__year = datetime.now().year).distinct().order_by('codMat')
+
+    return render(request, 'plantillas/verNotas.html',  {'e':e, 'r':r,'m':m})
+
+def PerfilEstudiante(request, username):
+    e = Estudiante.objects.get(usuario__codUsu = username)
+    model = Estudiante
+    form = PerfilEstudianteForm(request.POST, instance = e)
+
+    return render(request, 'plantillas/perfilEstudiante.html', {'form':form, 'e':e})
+
     e = EvaluacionDocente.objects.get(estado = 1)
     form = EvaluacionForm(request.POST)
     return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
 
+##### FINAL CODIGO DE RUDDY     =================================================================================
 
 
 
