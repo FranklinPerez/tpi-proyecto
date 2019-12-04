@@ -1,11 +1,10 @@
 
-<h3> Modificar Datos Profesor</h3>
+<h3> Modificar Datos Materia</h3>
 <div class="container">
 	<div class="row">
 <br>
 
-
-    <form action="{% url 'admon:modificarPro' object.pk %}" method="POST">
+    <form action="{% url 'admon:modificarMateria' object.pk %}" method="POST">
 			
 			{% csrf_token %}
 			
@@ -21,7 +20,7 @@
 
     <input type="submit"  class="btn btn-success" style="background-color:#33CC00;color:white" name="submit" value="Guardar Cambios">
 
-    <a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
+    <a href="{% url 'admon:listado_Materia' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Cancelar</a>
                  
                  
         </form>

@@ -10,7 +10,7 @@
 
 	    <a href="{% url 'admon:crearProfesor' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Crear Profesor</a>
 		</a>---
-		<a href="{% url 'admon:listado_Profesor' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado de profesores</a>
+		<a href="{% url 'admon:secretaria' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Gestion General</a>
 		
 <div id="popup">
 	</div>
@@ -34,7 +34,7 @@
 				</td>
 
 				<td style="text-align:center;">
-					<a href="#" onclick="return abrir_modal('{% url 'admon:eliminarPro' pro.pk %}', 'Eliminar Profesor {{ pro}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
+					<a href="#" onclick="return abrir_modal('{% url 'admon:eliminarPro' pro.pk %}', 'Emiminar/{{ pro.codPro}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
 				</td>
 					</tr>
 		{% endfor %}

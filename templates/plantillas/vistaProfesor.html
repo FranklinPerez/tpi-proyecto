@@ -1,29 +1,23 @@
 {% extends 'base/base.html'%}
 
-{% block title %} Gestion de Estudiante {% endblock %}
+{% block title %} Gestion de Notas {% endblock %}
 
-{% block encabezado %} Gestion de Estudiante {% endblock %}
+{% block encabezado %} Gestion de Notas {% endblock %}
 {% block content %}
 <h3>Aqui puede registrar y modificar las notas de los Estudiantes de las materias que imparte</h3>
 
 <div class="row text-center">
 	<table  class="table table-sm">
 		<tr style="text-align: center">
-			<th style="text-align: center">Codigo del Estudiante</th>
-			<th style="text-align: center">Nombre del Estudiante</th>
-			<th style="text-align: center">Editar Estudiante</th>
-            <th style="text-align: center">Eliminar Estudiante</th>
+			<th style="text-align: center">Codigo de la Materia</th>
+			<th style="text-align: center">Nombre de la Materia</th>
+			<th style="text-align: center">Registrar Nota</th>
 		</tr>
-		{% for est in estudiantes %}
+		{% for mat in materias %}
 					<tr>
-						<td>{{est.nieEst}}</td>
-						<td>{{est.nomEst}}</td>
-						<td style="text-align:center;">
-							<a href="#" onclick="return abrir_modal('{% url 'citasyconsultas:modificar_esticamento' est.pk %}', 'Modificar/{{ est.codesticamento }}')" class="btn"><span class="glyphicon glyphicon-pencil">Editar {{est.nomesticamento}}</a>
-							</td>
-						<td style="text-align:center;">
-							<a href="#" onclick="return abrir_modal('{% url 'citasyconsultas:eliminar_esticamento' est.pk %}', 'Emiminar/{{ est.codesticamento}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar {{est.nomesticamento}}</a
-								td>
+						<td>{{mat.codMat}}</td>
+						<td>{{mat.nomMat}}</td>
+						<td><a href="{% url 'admon:vistaNotaMateria' mat.pk  profesor %}" class="btn"><span class="glyphicon glyphicon-pencil">registrar Notas</a></td>
 					</tr>
 		{% endfor %}
 	</table>

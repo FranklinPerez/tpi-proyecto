@@ -7,14 +7,14 @@ class EstudianteForm(forms.ModelForm):
 	class Meta:
 		model = Estudiante
 		fields = {
-			'nieEst','nomEst', 'apeEst','fecNac','graEst','dirEst','edadEst',
+			'nieEst','nomEst', 'apeEst','fecNac','dirEst','edadEst',
 		}
 		labels = {
 			'nieEst':'NIE del estudiante',
 			'nomEst':'Nombre del estudiante',
 		    'apeEst':'apellidodel estudiante',
 		    'fecNac':'fecha de macimiento',
-		    'graEst':'grado a estudiar',
+		    
 		    'edadEst':'edad actual',
 		    'dirEst':'Direccion',
 		}	
@@ -33,8 +33,32 @@ class ProfesorForm(forms.ModelForm):
 		}
 
 
+class MateriaForm(forms.ModelForm):
+	class Meta:
+		model = Materia
+		fields = {
+			'codMat','nomMat','profesor','estudiantes',
+		}
+		labels = {
+			'codMat':'Codigo de la materia',
+			'nomMat':'Nombre de la materia',
+		    'profesor':'Estado',
+		    'estudiantes':'Estado',
+		}
 
-
+class GradoForm(forms.ModelForm):
+	class Meta:
+		model = Grado
+		fields = {
+			'nomGra','nivGra', 'orientador', 'anio','materias',
+		}
+		labels = {
+			'nomGra':'Codigo del profesor',
+			'nivGra':'Nombre del profesor',
+		    'orientador':'Estado',
+		    'anio':'Estado',
+		    'materias':'Estado',
+		}
 
 
 

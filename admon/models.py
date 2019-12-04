@@ -16,7 +16,7 @@ class Usuario(models.Model):
 		('s', 'Secretaria'),		
 
 		('e','Estudiante'),
-		
+		('a', 'Administrador'),
 		('o', 'Orientador'),		
 
 		)
@@ -25,7 +25,7 @@ class Usuario(models.Model):
         max_length=10,
         choices=TIPO_USUARIO,
         blank=True,
-        default='Estudiante',
+        default='e',
         help_text='Tipo de usuario en el sistema')
 
 	def __str__(self):
@@ -38,12 +38,11 @@ class Estudiante(models.Model):
 	nomEst=models.CharField(max_length=20,help_text="Primer y/o segundo nombre del estudiante")
 	apeEst=models.CharField(max_length=20,help_text="Primer y/o segundo apellido del estudiante")
 	fecNac=models.DateField(null=False, blank=True)
-	graEst=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)	
 	dirEst=models.CharField(max_length=100,help_text="Direccion del estudiante")
 	edadEst=models.IntegerField(help_text="Edad actual del estudiante", null=True, blank=True)
 	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
 	def __str__(self):
-		return self.nieEst
+		return self.nomEst
 #fin modelo para los estudiantes del sistema
 
 #modelo para el padre
@@ -67,35 +66,37 @@ class Representante(models.Model):
 	dirRep=models.CharField(max_length=100,help_text="Direccion del representante")
 #fin modelo para el representante
 
-# modelo para los grados de educacion que cursan los estudiantes
-class Grado(models.Model):
-	nomGra=models.CharField(max_length=15,help_text="nombre del grado", primary_key=True)
-	nivGra=models.CharField(max_length=20,help_text="nivel del grado (primer ciclo, segundo ciclo, etc)")
-	seccion=models.CharField(max_length=1,help_text="Seccion del grado")
-#fin modelo para los grados de educacion que cursan los estudiantes
-
 # modelo para las materias que cursan los estudiantes
 class Materia(models.Model):
 	codMat=models.CharField(max_length=15,help_text="codigo de la materia", primary_key=True)
 	nomMat=models.CharField(max_length=15,help_text="nombre de la materia")
-	graMat=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)	
+	profesor=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
+	estudiantes = models.ManyToManyField(Estudiante, blank=True)
+	def __str__(self):
+		return self.nomMat
 #fin modelo para los materias que cursan los estudiantes
+
+# modelo para los grados de educacion que cursan los estudiantes
+class Grado(models.Model):
+	nomGra=models.CharField(max_length=15,help_text="nombre del grado", primary_key=True,validators=[solo_Letras])
+	nivGra=models.CharField(max_length=20,help_text="nivel del grado (primer ciclo, segundo ciclo, etc)")	
+	orientador=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
+	anio = models.CharField(max_length=4, help_text = " ")
+	materias = models.ManyToManyField(Materia, blank=True)
+#fin modelo para los grados de educacion que cursan los estudiantes
 
 # modelo para los profesores
 class Profesor(models.Model):
-
 	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
-	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
+	
 	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
-
 	codPro=models.CharField(max_length=15,help_text="", primary_key=True)
 	nomPro=models.CharField(max_length=100,help_text="",validators=[solo_Letras])	
-	
 
 	ESTADO= (
 
 		('a','activo'),
-		('i', 'inactivo'),			
+		('i', 'inactivo'),
 
 		)
 
@@ -110,13 +111,14 @@ class Profesor(models.Model):
 		return self.nomPro
 #fin modelo para los profesores
 
+
+
 # modelo para registro de nota
 class Actividad(models.Model):
 	numReg=models.IntegerField(help_text="numero de registro", primary_key=True)
 	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")	
 	notMat=models.ForeignKey('Materia', on_delete=models.SET_NULL, null=True)
 	notEst=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
-	notPro=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
 	mes=models.ForeignKey('Mes', on_delete=models.SET_NULL, null=True)
 
 	TIPO_NOTA= (
@@ -130,7 +132,7 @@ class Actividad(models.Model):
         max_length=10,
         choices=TIPO_NOTA,
         blank=True,
-        default='normal',
+        default='n',
         help_text='Tipo de notadel estudiante')
 
 #fin modelo para registro de nota
@@ -153,13 +155,18 @@ class Municipio(models.Model):
 #fin modelo para municipio
 
 class Mes(models.Model):
-	nomMes=models.CharField(max_length=15,primary_key=True)
+	numMes=models.IntegerField(primary_key=True)
+	nomMes=models.CharField(max_length=15)
 	anio=models.CharField(max_length=4, help_text="año del Mes")
 
 class Secretaria(models.Model):
 	codSec=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
 	nomSec=models.CharField(max_length=100,help_text="nombre del profesor")	
 	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+
+class Matricula(models.Model):
+	estudiante=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
+	grado=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)
 
 
 
@@ -370,4 +377,4 @@ class EvaluacionDocente(models.Model):
 	estado= models.IntegerField( choices=ESTADO, blank=True, default=1)
 
 # Fin Modelo EvaluacionDocente
->>>>>>> 19a68492a6cec28be77738b38b5fe1df252015ea
+

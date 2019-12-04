@@ -10,14 +10,32 @@ urlpatterns=[
 	path('autenticarUsuario', autenticarUsuario, name='autenticar_usuario'),
 	path('cerrarSesion', cerrarSesion, name='cerrar_sesion'),
 	path('bienvenida', bienvenida, name='bienvenida'),
-	path('gestionEstudiante/', ListadoEstudiante.as_view(), name='listado_estudiante'),
-	path('matricula/', crearEstudiante.as_view(), name='crear_estudiante'),
-	path('gestionProfesor/', ListadoProfesores.as_view(), name='listado_Profesor'),
+	
+	
+    path('secretaria/',secretaria,name='secretaria'),
+    path('vistaNotaMateria/<str:materia>+<str:profesor>/', vistaNotaMateria, name='vistaNotaMateria'),
+
+    path('gestionProfesor/', ListadoProfesor.as_view(), name='listado_Profesor'),
     path('registrarProfesor/', crearProfesor.as_view(), name='crearProfesor'),
+    path('modificarProfesor/<str:pk>/', ModificarProfesor.as_view(), name = 'modificarPro'),
+	path('eliminarProfesor/<str:pk>/', EliminarProfesor.as_view(), name = 'eliminarPro'),
+
+	path('gestionEstudiante/', ListadoEstudiante.as_view(), name='listado_Estudiante'),
+    path('registrarEstudiante/', crearEstudiante.as_view(), name='crearEstudiante'),
+    path('modificarEstudiante/<int:pk>/', ModificarEstudiante.as_view(), name = 'modificarEstudiante'),
+	path('eliminarEstudiante/<int:pk>/', EliminarEstudiante.as_view(), name = 'eliminarEstudiante'),
 
 
+	path('gestionMateria/', ListadoMateria.as_view(), name='listado_Materia'),
+    path('registrarMateria/', crearMateria.as_view(), name='crearMateria'),
+    path('modificarMateria/<int:pk>/', ModificarMateria.as_view(), name = 'modificarMateria'),
+	path('eliminarMateria/<int:pk>/', EliminarMateria.as_view(), name = 'eliminarMateria'),
 
 
+	path('gestionGrado/', ListadoGrado.as_view(), name='listado_Grado'),
+    path('registrarGrado/', crearGrado.as_view(), name='crearGrado'),
+    path('modificarGrado/<str:pk>/', ModificarGrado.as_view(), name = 'modificarGrado'),
+	path('eliminarGrado/<str:pk>/', EliminarGrado.as_view(), name = 'eliminarGrado'),
 
 
 
@@ -77,6 +95,4 @@ urlpatterns=[
 	path('modificarEv/<int:pk>/', ModificarEvaluacion.as_view(), name = 'modificarEv'),
 	path('evaluarDocente/', evaluarDocente, name='evaluarDocente'),
 
-	path('modificarProfesor/<int:pk>/', ModificarProfesor.as_view(), name = 'modificarPro'),
-	path('eliminarProfesor/<int:pk>/', EliminarProfesor.as_view(), name = 'eliminarPro'),
 	]

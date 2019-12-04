@@ -1,14 +1,14 @@
 {% extends 'base/base.html'%}
 
-{% block title %} Gestion de Estudiantes {% endblock %}
+{% block title %} Registro de notas {% endblock %}
 
-{% block encabezado %} Gestion de Estudiantes {% endblock %}
+{% block encabezado %} Gestion de Profesor {% endblock %}
 {% block content %}
-<h3>Aqui puede registrar, modificar y eliminar los Estudiantes</h3>
+<h3>Aqui puede registrar, modificar y eliminar los profesores</h3>
 <div class="container">
 	<div class="row">
 
-	    <a href="{% url 'admon:crearEstudiante' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Crear Estudiante</a>
+	    <a href="{% url 'admon:crearProfesor' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Crear Profesor</a>
 		</a>---
 		<a href="{% url 'admon:secretaria' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Gestion General</a>
 		
@@ -20,21 +20,21 @@
 <div class="row text-center">
 	<table  class="table table-sm">
 		<tr style="text-align: center">
-			<th style="text-align: center">Codigo del Estudiante</th>
-			<th style="text-align: center">Nombre del Estudiante</th>
-			<th style="text-align: center">Apellido del Estudiante</th>
+			<th style="text-align: center">Codigo del Profesor</th>
+			<th style="text-align: center">Nombre del Profesor</th>
+			<th style="text-align: center">Estado</th>
 		</tr>
-		{% for est in estudiantes %}
+		{% for pro in profesores %}
 					<tr>
-						<td>{{est.nieEst}}</td>
-						<td>{{est.nomEst}}</td>
-						<td>{{est.apeEst}}
+						<td>{{pro.codPro}}</td>
+						<td>{{pro.nomPro}}</td>
+						<td>{{pro.estado}}
 						<td style="text-align:center;">
-					<a href="{% url 'admon:modificarEstudiante' est.pk %}" class="btn"><span class="glyphicon glyphicon-pencil">Modificar</a>
+					<a href="{% url 'admon:modificarPro' pro.pk %}" class="btn"><span class="glyphicon glyphicon-pencil">Modificar</a>
 				</td>
 
 				<td style="text-align:center;">
-					<a href="#" onclick="return abrir_modal('{% url 'admon:eliminarEstudiante' est.pk %}', 'Emiminar/{{ est.nomEst}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
+					<a href="#" onclick="return abrir_modal('{% url 'admon:eliminarPro' pro.pk %}', 'Emiminar/{{ pro.codPro}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
 				</td>
 					</tr>
 		{% endfor %}
