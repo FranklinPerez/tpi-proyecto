@@ -241,9 +241,11 @@ def evArmada(request):
 
 # Vista para que la Secre borre o modifique la evaluacion-------------------
 def evaluationManager(request):
-    evP = EvaluacionDocente.objects.filter(estado = 1)
+    evP = EvaluacionDocente.objects.filter(estado = 1).order_by('fecVen')
     evF = EvaluacionDocente.objects.filter(estado = 2)
-    return render(request, 'plantillas/evaluationManager.html', {'evP':evP, 'evF':evF})
+    ev = EvaluacionDocente.objects.filter(estado = 1).filter(fecVen__lt = datetime.now())
+
+    return render(request, 'plantillas/evaluationManager.html', {'evP':evP, 'evF':evF,'ev':ev})
 
 class CancelarEvaluacion(DeleteView):
     template_name = 'plantillas/cancelarEvaluacion.html'
@@ -256,27 +258,31 @@ class ModificarEvaluacion(UpdateView):
     model = EvaluacionDocente
     success_url = reverse_lazy('admon:gestionEvaluacion')
 
-def EvaluacionesPendientes(request):
-    pk = request.GET.get('action', None)
+def estadoEvaluacion(request):
+    e = EvaluacionDocente.objects.filter(estado = 1).filter(fecVen__lt = datetime.now()).update(estado = 2)
+    return render(request, 'plantillas/estadoEvaluacion.html', {'e':e})
+   
 
-    e = EvaluacionDocente.objects.filter(estado = 1).filter(profes__registro__notEst_id = pk).distinct()
-
-    est = Estudiante.objects.get(nieEst = pk)
-    return render(request, 'plantillas/evPendientes.html', {'e':e,'est':est})
+def EvaluacionesPendientes(request, pk):
+    ev = EvaluacionDocente.objects.filter(estado = 1).order_by('numEva').filter(profes__registro__notEst_id = pk).exclude(evaluacion__estudiante_id = pk).distinct()
+    est = Estudiante.objects.get(pk = pk)
+    
+    return render(request, 'plantillas/evPendientes.html', {'ev':ev,'est':est})
 
 # Vista del estudiante para evaluar al docente-------------------------------------
 def evaluarDocente(request, pk, pk2):
     est = Estudiante.objects.get(nieEst = pk)
-    ev = EvaluacionDocente.objects.filter(estado = 1).get(profes_id = pk2)
+    ev = EvaluacionDocente.objects.filter(estado = 1).get(profes__codPro = pk2)
+
     if request.method == 'POST':
         form = EvaluacionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('admon:perfilE', est.usuario.codUsu)
+            return redirect('admon:evPendientes', est.nieEst)
     else:
         form=EvaluacionForm()
 
-    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'ev':ev})
+    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'ev':ev, 'est':est})
 
 def verNotas(request):
     pk = request.GET.get('action', None)

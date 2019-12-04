@@ -24,11 +24,7 @@
                 </form>
             </td>
             <td width="400" style="text-align: center">
-                <form method="GET" action="{% url 'admon:evPendientes' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="{{e.pk}}">
-                    <input type="submit" class="btn btn-success" style="color:white; background-color:#33CC00" value="Evaluación de Docentes"></input>
-                </form>
+               <a class="btn btn-success" href="{% url 'admon:evPendientes' e.pk %}" class="btn btn-success" style="color:white; background-color:#33CC00">Evaluación de Docentes</a>
             </td>
         </tr>
         <tr>
@@ -36,7 +32,7 @@
                 <p>Aqui puedes ver todas tus calificaciones</p>
             </td>
             <td style="text-align: center">
-                <p>Aqui puedes evaluar el desempeño de tu Docente, si hay una evaluación pendiente</p>
+                <p>Aqui puedes evaluar el desempeño de tus Docentes, si hay una evaluación pendiente</p>
             </td>
         </tr>
     </table>

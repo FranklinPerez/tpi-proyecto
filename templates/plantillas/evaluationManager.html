@@ -8,9 +8,15 @@
 
 <h3>Control de Evaluaciones</h3><br>
 <div>
+
 	<a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#33CC00">Generar Evaluación</a>
-	
+
+	{% if ev %}
+	<a href="#" style="background-color:#f6685e;color:white" onclick="return abrir_modal('{% url 'admon:estadoEv'%}', 'Cambiar Estado de las Evaluaciones')" class="btn">Hay Evaluaciones por Desactivar</a>
+	{% endif %}
+
 	<!--<div><a href="{% url 'admon:armarEvaluacion' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar</a></div><br>-->
+	
 <br><br><br>
 <h5>Se muestran las evaluaciones con estado de Pendiente ( Estado = 1 )</h5><br>
 </div>
@@ -30,12 +36,19 @@
 				<td>{{e1.fecVen}}</td>
 				
 				<td style="text-align:center;">
-					<a href="{% url 'admon:modificarEv' e1.pk %}" class="btn"><span class="glyphicon glyphicon-pencil">Modificar</a>
+					<a href="{% url 'admon:modificarEv' e1.pk %}" style="background-color:#33CC00;color:white" class="btn"><span class="glyphicon glyphicon-pencil">Cambiar Fecha</a>
 				</td>
 
 				<td style="text-align:center;">
-					<a href="#" onclick="return abrir_modal('{% url 'admon:cancelarEv' e1.pk %}', 'Cancelar Evaluación del Docente {{ e1.profes}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Cancelar</a>
+					<a href="#" style="background-color:#f6685e;color:white" onclick="return abrir_modal('{% url 'admon:cancelarEv' e1.pk %}', 'Cancelar Evaluación del Docente {{ e1.profes}}')" class="btn"><span class="glyphicon glyphicon-trash"></span>Eliminar</a>
 				</td>
+				{% for ev in ev %}
+					{% if e1.numEva == ev.numEva %}
+					<td style="background-color:#f6685e;color:white">
+						<h7>Fecha Límite Alcanzada</h7>
+					</td>
+					{% endif %}
+				{% endfor %}
 			</tr>
 		{% endfor %}
 </table>

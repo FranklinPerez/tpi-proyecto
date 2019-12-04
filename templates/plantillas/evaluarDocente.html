@@ -10,7 +10,6 @@
     <div>
         <h3>Docente: {{ev.profes }}</h3>
     </div>
-    <br>
     <div>
         <form  method="POST" id="evForm" >
             
@@ -19,6 +18,9 @@
             <table border="2">
                 <tbody>
                     {{form.evaluacion}}
+                    {{form.totalE}}
+                    {{form.estudiante}}
+                    
                     <tr>
                         <tr>
                             <td><b> 1-> </b></td>
@@ -75,6 +77,10 @@
                     
                 </tbody>                            
             </table>
+
+            <input type="hidden" name="evId" id="id_evId" value="{{ev.numEva}}">
+            <input type="hidden" name="estId" id="id_estId" value="{{est.nieEst}}">
+
             <br><br>                  
             <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" name="submit" value="Enviar">
                              
@@ -174,8 +180,11 @@
         
         document.getElementById('id_totalE').value = c;
 
-        
-        document.getElementById('id_evaluacion') = ev.id;
+        var evaluac = document.getElementById('id_evId').value;
+        document.getElementById('id_evaluacion').value = evaluac;
+
+        var estud = document.getElementById('id_estId').value;
+        document.getElementById('id_estudiante').value = estud;
         
     }
 

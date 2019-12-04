@@ -360,7 +360,7 @@ class EvaluacionDocente(models.Model):
 		return self.profes.nomPro 
 
 class Evaluacion(models.Model):
-	evaluacion = models.ForeignKey('EvaluacionDocente', on_delete=models.PROTECT, null=True)
+	evaluacion = models.ForeignKey('EvaluacionDocente', on_delete = models.PROTECT, null=True)
 
 	VALOR_PREGUNTA = ((1,'Necesita Mejorar'), (2, 'Regular'),(3,'Bueno'), (4, 'Muy Bueno'),(5, 'Excelente'),)
 
@@ -376,5 +376,6 @@ class Evaluacion(models.Model):
 	valPreg9 = models.IntegerField(choices = VALOR_PREGUNTA, null=False, blank = False)
 
 	totalE = models.IntegerField( null=True)
+	estudiante = models.ForeignKey('Estudiante', on_delete = models.PROTECT, null = True )
 
 # Fin Modelo EvaluacionDocente

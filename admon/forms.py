@@ -244,9 +244,10 @@ class EvaluacionForm(forms.ModelForm):
 			'valPreg8',
 			'valPreg9',
 			'totalE',
+			'estudiante',
 		}
 		labels = {
-			'evaluacion': 'Docente',
+			'evaluacion': '',
 			'valPreg0':'',
 		    'valPreg1':'',
 		    'valPreg2':'',
@@ -258,9 +259,12 @@ class EvaluacionForm(forms.ModelForm):
 		    'valPreg8':'',
 		    'valPreg9':'',
 		    'totalE':'',
+		    'estudiante':'',
 		}
 		widgets ={
+			'evaluacion' : forms.TextInput(attrs={'type':'hidden'}),
 			'totalE' : forms.TextInput(attrs={'type':'hidden'}),
+			'estudiante' : forms.TextInput(attrs={'type':'hidden'}),
 		}
 
 
