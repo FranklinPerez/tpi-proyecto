@@ -38,7 +38,7 @@ def autenticarUsuario(request):
 
     	else:
     		if filtro[0].get('tipo_usuario')=='d': 
-    			return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
+    		  return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
     else:
     	return render(request,'plantillas/errorUsuario.html')	
 
@@ -64,6 +64,16 @@ class crearEstudiante(CreateView):
     form_class = EstudianteForm
     success_url = reverse_lazy('admon:listado_estudiante')
 
+def VistaProfesor(request):
+    return render(
+        request,
+        'plantillas/vistaProfesor.html'
+    )
+
+
+def VistaNota(request):
+    estudiantes=Estudiante.objects.filter()
+    return render(request, 'plantillas/vistaProfesor.html', {'evP':evP, 'evF':evF})
 
 
 class ListadoProfesores(ListView):
@@ -229,6 +239,7 @@ class crearProfesor(CreateView):
 
 ###   CODIGO DE RUDDY   ===============================================
 
+
 # Vista para que la Secre arme la evaluacion y quede activa de una-------------------
 class armarEvaluacion(CreateView):
     template_name = 'plantillas/armarEvaluacion.html'
@@ -264,7 +275,7 @@ def estadoEvaluacion(request):
    
 
 def EvaluacionesPendientes(request, pk):
-    ev = EvaluacionDocente.objects.filter(estado = 1).order_by('numEva').filter(profes__registro__notEst_id = pk).exclude(evaluacion__estudiante_id = pk).distinct()
+    ev = EvaluacionDocente.objects.filter(estado = 1).order_by('numEva').filter(profes__actividad__notEst_id = pk).exclude(evaluacion__estudiante_id = pk).distinct()
     est = Estudiante.objects.get(pk = pk)
     
     return render(request, 'plantillas/evPendientes.html', {'ev':ev,'est':est})
@@ -288,8 +299,8 @@ def verNotas(request):
     pk = request.GET.get('action', None)
 
     e = Estudiante.objects.get(nieEst = pk)
-    r = Registro.objects.filter(notEst = pk).filter(year = datetime.now().year).order_by('notMat', 'periodo')
-    m = Materia.objects.filter(registro__notEst = pk).filter(registro__year = datetime.now().year).distinct().order_by('codMat')
+    r = Actividad.objects.filter(notEst = pk).filter(year = datetime.now().year).order_by('notMat', 'periodo')
+    m = Materia.objects.filter(actividad__notEst = pk).filter(actividad__year = datetime.now().year).distinct().order_by('codMat')
 
     return render(request, 'plantillas/verNotas.html',  {'e':e, 'r':r,'m':m})
 
@@ -305,6 +316,7 @@ def PerfilEstudiante(request, username):
     return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
 
 ##### FINAL CODIGO DE RUDDY     =================================================================================
+
 
 
 class ModificarProfesor(UpdateView):

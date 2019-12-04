@@ -16,8 +16,8 @@ class Usuario(models.Model):
 		('s', 'Secretaria'),		
 
 		('e','Estudiante'),
-		('d', 'Docente'),
-		('d', 'Orientador'),		
+		
+		('o', 'Orientador'),		
 
 		)
 
@@ -25,7 +25,7 @@ class Usuario(models.Model):
         max_length=10,
         choices=TIPO_USUARIO,
         blank=True,
-        default='sssssqqqqq',
+        default='Estudiante',
         help_text='Tipo de usuario en el sistema')
 
 	def __str__(self):
@@ -41,7 +41,9 @@ class Estudiante(models.Model):
 	graEst=models.ForeignKey('Grado', on_delete=models.SET_NULL, null=True)	
 	dirEst=models.CharField(max_length=100,help_text="Direccion del estudiante")
 	edadEst=models.IntegerField(help_text="Edad actual del estudiante", null=True, blank=True)
+
 	usuario = models.ForeignKey('Usuario', on_delete = models.SET_NULL, null=True)
+
 	def __str__(self):
 		return self.nieEst
 #fin modelo para los estudiantes del sistema
@@ -83,9 +85,15 @@ class Materia(models.Model):
 
 # modelo para los profesores
 class Profesor(models.Model):
+
+	codPro=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
+	nomPro=models.CharField(max_length=100,help_text="nombre del profesor")	
+	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
+
 	codPro=models.CharField(max_length=15,help_text="", primary_key=True)
 	nomPro=models.CharField(max_length=100,help_text="",validators=[solo_Letras])	
 	
+
 	ESTADO= (
 
 		('a','activo'),
@@ -105,13 +113,13 @@ class Profesor(models.Model):
 #fin modelo para los profesores
 
 # modelo para registro de nota
-class Registro(models.Model):
+class Actividad(models.Model):
 	numReg=models.IntegerField(help_text="numero de registro", primary_key=True)
-	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")
-	ponNot=models.DecimalField(max_digits = 3, decimal_places = 2,help_text="ponderacion del estudiante")
+	nota=models.DecimalField(max_digits = 4, decimal_places = 2,help_text="nota del estudiante")	
 	notMat=models.ForeignKey('Materia', on_delete=models.SET_NULL, null=True)
 	notEst=models.ForeignKey('Estudiante', on_delete=models.SET_NULL, null=True)
 	notPro=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
+
 	year = models.IntegerField(null=False, blank=False, default=datetime.now().year) # GREGADO PRO RUDDY PARA FILTRAR NOTAS
 
 	PERIODO= (
@@ -130,6 +138,8 @@ class Registro(models.Model):
         default='1',
         help_text='Tipo de nota del estudiante')
 
+	mes=models.ForeignKey('Mes', on_delete=models.SET_NULL, null=True)
+
 	TIPO_NOTA= (
 
 		('n','normal'),
@@ -141,7 +151,7 @@ class Registro(models.Model):
         max_length=10,
         choices=TIPO_NOTA,
         blank=True,
-        default='sssssqqqqq',
+        default='normal',
         help_text='Tipo de notadel estudiante')
 
 #fin modelo para registro de nota
@@ -162,6 +172,15 @@ class Municipio(models.Model):
 	def __str__(self):
 		return self.nomMunicipio	
 #fin modelo para municipio
+
+class Mes(models.Model):
+	nomMes=models.CharField(max_length=15,primary_key=True)
+	anio=models.CharField(max_length=4, help_text="año del Mes")
+
+class Secretaria(models.Model):
+	codSec=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
+	nomSec=models.CharField(max_length=100,help_text="nombre del profesor")	
+	usuario=models.ForeignKey('Usuario', on_delete=models.SET_NULL, null=True)
 
 
 
@@ -378,4 +397,4 @@ class Evaluacion(models.Model):
 	totalE = models.IntegerField( null=True)
 	estudiante = models.ForeignKey('Estudiante', on_delete = models.PROTECT, null = True )
 
-# Fin Modelo EvaluacionDocente
+

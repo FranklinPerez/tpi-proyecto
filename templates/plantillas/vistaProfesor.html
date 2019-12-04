@@ -4,19 +4,8 @@
 
 {% block encabezado %} Gestion de Estudiante {% endblock %}
 {% block content %}
-<h3>Aqui puede registrar, modificar y eliminar los estudiantes</h3>
-<div class="container">
-	<div class="row">
+<h3>Aqui puede registrar y modificar las notas de los Estudiantes de las materias que imparte</h3>
 
-	<a href="{% url 'admon:crear_estudiante' %}" class="btn btn-success" style="color:white; background-color:#33CC00">
-   Registrar Nuevo Estudiante
-		</a>---
-		<a href="{% url 'admon:listado_estudiante' %}" class="btn btn-success" style="color:white; background-color:#f6685e">Regresar a Listado de estudiantes</a>
-<div id="popup">
-	</div>
-</div><br><br>
-
-<br><br>
 <div class="row text-center">
 	<table  class="table table-sm">
 		<tr style="text-align: center">
@@ -39,10 +28,7 @@
 		{% endfor %}
 	</table>
 </div>
-</div>
 
-
-</div>
 	<script>
 var modal;
 
