@@ -1,10 +1,3 @@
-{% extends 'base/base.html'%}
-
-{% block title %} Evaluaciones Pendientes {% endblock %}
-
-{% block encabezado %} Evaluaciones Pendientes {% endblock %}
-
-{% block content %}
 
 <div class="row text-center">
     <h3>Evaluaciones Pendientes.</h3>
@@ -29,6 +22,8 @@
     <br><br>
 {% else %}
     <h2>No tienes Evaluaciones de Docentes Pendientes</h2>
+    <br>
+    <a class="btn btn-success" href="{% url 'admon:perfilE' est.usuario.codUsu %}" class="btn btn-success" style="color:white; background-color:#33CC00">Regresar</a>
 {% endif %}
 
 </table>
@@ -38,5 +33,3 @@
 </script>
 
 </div>
-
-{% endblock %}

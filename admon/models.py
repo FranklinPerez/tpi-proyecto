@@ -13,7 +13,7 @@ class Usuario(models.Model):
 	TIPO_USUARIO= (
 
 		('p','Profesor'),
-		('s', 'Secretaria'),		
+		('s', 'Secretaria'),
 
 		('e','Estudiante'),
 		('a', 'Administrador'),
@@ -35,14 +35,13 @@ class Usuario(models.Model):
 # modelo para los estudiantes del sistema
 class Estudiante(models.Model):
 	nieEst=models.IntegerField(help_text="Codigo del MINED asignado al estudiante",primary_key=True)
-	nomEst=models.CharField(max_length=20,help_text="Primer y/o segundo nombre del estudiante")
-	apeEst=models.CharField(max_length=20,help_text="Primer y/o segundo apellido del estudiante")
+	nomEst=models.CharField(max_length=30,help_text="Primer y/o segundo nombre del estudiante")
+	apeEst=models.CharField(max_length=30,help_text="Primer y/o segundo apellido del estudiante")
 	fecNac=models.DateField(null=False, blank=True)
 	dirEst=models.CharField(max_length=100,help_text="Direccion del estudiante")
 	edadEst=models.IntegerField(help_text="Edad actual del estudiante", null=True, blank=True)
-
 	usuario = models.ForeignKey('Usuario', on_delete = models.SET_NULL, null=True)
-
+	ciudad=models.CharField(max_length=20, null=True)
 	def __str__(self):
 		return self.nomEst
 #fin modelo para los estudiantes del sistema
@@ -83,7 +82,7 @@ class Grado(models.Model):
 	nomGra=models.CharField(max_length=15,help_text="nombre del grado", primary_key=True,validators=[solo_Letras])
 	nivGra=models.CharField(max_length=20,help_text="nivel del grado (primer ciclo, segundo ciclo, etc)")	
 	orientador=models.ForeignKey('Profesor', on_delete=models.SET_NULL, null=True)
-	anio = models.CharField(max_length=4, help_text = " ")
+	anio = models.CharField(max_length=4, help_text = " ", null=True)
 	materias = models.ManyToManyField(Materia, blank=True)
 #fin modelo para los grados de educacion que cursan los estudiantes
 
@@ -182,6 +181,8 @@ class Mes(models.Model):
 	numMes=models.IntegerField(primary_key=True)
 	nomMes=models.CharField(max_length=15)
 	anio=models.CharField(max_length=4, help_text="año del Mes")
+	def __str__(self):
+		return self.nomMes
 
 class Secretaria(models.Model):
 	codSec=models.CharField(max_length=15,help_text="codigo del profesor", primary_key=True)
@@ -408,8 +409,7 @@ class Evaluacion(models.Model):
 	estudiante = models.ForeignKey('Estudiante', on_delete = models.PROTECT, null = True )
 
 
-<<<<<<< HEAD
+
 # Fin Modelo EvaluacionDocente
 
-=======
->>>>>>> cc4c2408dab4260695938a07b68666277c94634c
+

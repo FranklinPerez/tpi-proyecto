@@ -118,7 +118,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='EvaluacionRespondida',
+            name='Evaluacion',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('valPreg0', models.IntegerField(choices=[(1, 'Necesita Mejorar'), (2, 'Regular'), (3, 'Bueno'), (4, 'Muy Bueno'), (5, 'Excelente')])),

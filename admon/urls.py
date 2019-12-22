@@ -37,7 +37,7 @@ urlpatterns=[
     path('modificarGrado/<str:pk>/', ModificarGrado.as_view(), name = 'modificarGrado'),
 	path('eliminarGrado/<str:pk>/', EliminarGrado.as_view(), name = 'eliminarGrado'),
 
-
+	path('registrarNota/<int:est>+<str:mat>', registrarNota, name='registrarNota'),
 
 
 
@@ -95,8 +95,8 @@ urlpatterns=[
 	path('estadoEvaluacion/', estadoEvaluacion, name = 'estadoEv'),
 	path('modificarEv/<int:pk>/', ModificarEvaluacion.as_view(), name = 'modificarEv'),
 	path('evaluacionPendiente/<pk>/', EvaluacionesPendientes, name='evPendientes'),
-	path('perfilEstudiante/<username>/', PerfilEstudiante, name = 'perfilE'),
-	path('evaluarDocente/<int:pk>/<int:pk2>/', evaluarDocente, name='evaluarDocente'),
+	path('perfilEstudiante/<usuario>/', PerfilEstudiante, name = 'perfilE'),
+	path('evaluarDocente/<int:pk>/<pk2>/', evaluarDocente, name='evaluarDocente'),
 	path('verNotas/', verNotas, name='verNotas'),
 
 	]

@@ -33,7 +33,6 @@ def autenticarUsuario(request):
     contrasena = request.POST.get('password')
     filtro = Usuario.objects.filter(codUsu=usuario).filter(pasUsu=contrasena).values('tipo_usuario')
     if filtro:
-
         if filtro[0].get('tipo_usuario')=='p':
             materias=Materia.objects.filter(profesor__usuario__codUsu=usuario)
             
@@ -42,15 +41,15 @@ def autenticarUsuario(request):
             return render(request,'plantillas/secretaria.html') 
 
 
-    	if filtro[0].get('tipo_usuario')=='p':
-    		return redirect('admon:bienvenida')            
+        if filtro[0].get('tipo_usuario')=='p':
+            return redirect('admon:bienvenida')
 
-    	if filtro[0].get('tipo_usuario')=='e':
-    		return redirect('admon:perfilE', username)   #sustituir listado_consulta por el del estudiante        
+        if filtro[0].get('tipo_usuario')=='e':
+            return redirect('admon:perfilE', usuario)   #sustituir listado_consulta por el del estudiante        
 
-    	else:
-    		if filtro[0].get('tipo_usuario')=='d': 
-    		  return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
+        else:
+            if filtro[0].get('tipo_usuario')=='d': 
+                return redirect('admon:gestion_cita')  #sustituir gestion_cita por el del docente
 
     else:
         return render(request,'plantillas/errorUsuario.html')	
@@ -69,18 +68,23 @@ class crearProfesor(CreateView):
     success_url = reverse_lazy('admon:listado_Profesor')
 
 def vistaNotaMateria(request, materia, profesor):
-    materias=Materia.objects.filter(profesor__usuario__codUsu=profesor).filter(codMat=materia).values('estudiantes')
+    materia=Materia.objects.filter(profesor__usuario__codUsu=profesor).filter(codMat=materia).values('estudiantes')
     mat=Materia.objects.filter(codMat=materia)
     estudiantes=[]
     i=0
-    for est in materias:
-        est=Estudiante.objects.filter(nieEst=materias[i].get('estudiantes'))
+    for est in materia:
+        est=Estudiante.objects.filter(nieEst=materia[i].get('estudiantes')).values('nieEst','nomEst')
         estudiantes.append(est)
         i=i+1
+    
 
-    print(mat)
-    return render(request,'plantillas/registroNotas.html',context = {'estudiantes':estudiantes})
+    return render(request,'plantillas/registroNotas.html',{'estudiantes':estudiantes})
 
+
+def registrarNota(request, est,mat):
+
+
+    return render(request,'plantillas/registroNotas.html')
 
 def bienvenida(request):
     return render(request, 'base/base.html')
@@ -364,16 +368,12 @@ def verNotas(request):
 
     return render(request, 'plantillas/verNotas.html',  {'e':e, 'r':r,'m':m})
 
-def PerfilEstudiante(request, username):
-    e = Estudiante.objects.get(usuario__codUsu = username)
+def PerfilEstudiante(request, usuario):
+    e = Estudiante.objects.get(usuario__codUsu = usuario)
     model = Estudiante
     form = PerfilEstudianteForm(request.POST, instance = e)
 
-    return render(request, 'plantillas/perfilEstudiante.html', {'form':form, 'e':e})
-
-    e = EvaluacionDocente.objects.get(estado = 1)
-    form = EvaluacionForm(request.POST)
-    return render(request, 'plantillas/evaluarDocente.html', {'form':form, 'e':e} )
+    return render(request, 'plantillas/perfilEstudiante.html', {'form':form, 'e':e} )
 
 ##### FINAL CODIGO DE RUDDY     =================================================================================
 
